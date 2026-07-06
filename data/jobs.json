@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "job-20260706-001",
+    "title": "Senior Director, Analyst \u2013 Data Management and AI Readiness",
+    "company": "Gartner",
+    "url": "https://gartner.wd5.myworkdayjobs.com/ext/job/remote---united-states/sr-director--analyst---data-management-and-ai-readiness_111319",
+    "source": "remoterocketship",
+    "discovered_date": "2026-07-06",
+    "status": "checked",
+    "location": "United States \u2013 Remote",
+    "salary": "$172k - $202.5k / year",
+    "level": "Senior",
+    "raw_description": "Senior Director at Gartner guiding clients through data management and AI strategies. Leveraging extensive industry expertise."
+  },
+  {
+    "id": "job-20260706-002",
+    "title": "Data Analyst",
+    "company": "Marie Curie UK",
+    "url": "https://jobs.smartrecruiters.com/mariecurie1/3743990013924386-data-analyst-",
+    "source": "remoterocketship",
+    "discovered_date": "2026-07-06",
+    "status": "checked",
+    "location": "United Kingdom \u2013 Remote",
+    "salary": "\u00a338k - \u00a342.2k / year",
+    "level": "Mid-level",
+    "raw_description": "Data Analyst producing reliable reports and improving data quality. Collaborating with business stakeholders and technical teams."
+  },
+  {
+    "id": "job-20260706-003",
+    "title": "Business Data Analyst",
+    "company": "Homewood Health",
+    "url": "https://homewoodhealth.com",
+    "source": "remoterocketship",
+    "discovered_date": "2026-07-06",
+    "status": "checked",
+    "location": "Canada \u2013 Remote",
+    "salary": "Not specified",
+    "level": "Mid-level",
+    "raw_description": "Business Data Analyst supporting mental health organization by providing data reporting and analytics solutions."
+  },
+  {
+    "id": "job-20260706-004",
+    "title": "Senior Sourcing Manager \u2013 Sourcing Analytics",
+    "company": "Switzerland Global Enterprise",
+    "url": "https://www.remoterocketship.com",
+    "source": "remoterocketship",
+    "discovered_date": "2026-07-06",
+    "status": "checked",
+    "location": "United States \u2013 Remote",
+    "salary": "$125k - $208.3k / year",
+    "level": "Senior",
+    "raw_description": "Managing Global Sourcing analytics to drive executive-level decision support. Leveraging data to enhance sourcing strategies."
+  },
+  {
+    "id": "job-20260706-005",
+    "title": "Senior Marketing Analyst, Strategy & Analytics",
+    "company": "Toptal",
+    "url": "https://www.toptal.com/careers",
+    "source": "remoterocketship",
+    "discovered_date": "2026-07-06",
+    "status": "checked",
+    "location": "United States \u2013 Remote",
+    "salary": "Not specified",
+    "level": "Senior",
+    "raw_description": "Leveraging data to deliver insights for marketing strategy and performance improvement. Analyzing SEM, SEO, and AI marketing channels."
+  }
+]

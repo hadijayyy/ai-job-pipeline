@@ -1,1 +1,77 @@
-[]
+[
+  {
+    "id": "job-20260706-003",
+    "title": "Business Data Analyst",
+    "company": "Homewood Health",
+    "url": "https://homewoodhealth.com",
+    "score": 77.2,
+    "breakdown": {
+      "stack_match": 83.3,
+      "remote_fit": 90,
+      "salary_fit": 60,
+      "experience_fit": 75,
+      "strategic_fit": 65
+    },
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260706-004",
+    "title": "Senior Sourcing Manager \u2013 Sourcing Analytics",
+    "company": "Switzerland Global Enterprise",
+    "url": "https://www.remoterocketship.com",
+    "score": 72.0,
+    "breakdown": {
+      "stack_match": 41.7,
+      "remote_fit": 90,
+      "salary_fit": 85,
+      "experience_fit": 90,
+      "strategic_fit": 65
+    },
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260706-002",
+    "title": "Data Analyst",
+    "company": "Marie Curie UK",
+    "url": "https://jobs.smartrecruiters.com/mariecurie1/3743990013924386-data-analyst-",
+    "score": 67.8,
+    "breakdown": {
+      "stack_match": 41.7,
+      "remote_fit": 90,
+      "salary_fit": 75,
+      "experience_fit": 75,
+      "strategic_fit": 65
+    },
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260706-005",
+    "title": "Senior Marketing Analyst, Strategy & Analytics",
+    "company": "Toptal",
+    "url": "https://www.toptal.com/careers",
+    "score": 67.0,
+    "breakdown": {
+      "stack_match": 41.7,
+      "remote_fit": 90,
+      "salary_fit": 60,
+      "experience_fit": 90,
+      "strategic_fit": 65
+    },
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260706-001",
+    "title": "Senior Director, Analyst \u2013 Data Management and AI Readiness",
+    "company": "Gartner",
+    "url": "https://gartner.wd5.myworkdayjobs.com/ext/job/remote---united-states/sr-director--analyst---data-management-and-ai-readiness_111319",
+    "score": 59.5,
+    "breakdown": {
+      "stack_match": 0.0,
+      "remote_fit": 90,
+      "salary_fit": 85,
+      "experience_fit": 90,
+      "strategic_fit": 65
+    },
+    "recommendation": "medium"
+  }
+]

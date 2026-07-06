@@ -1,0 +1,90 @@
+{
+  "name": "Ryan Hadi",
+  "email": "ryanhadi.career@gmail.com",
+  "phone": "+62812xxxx090",
+  "location": "Jakarta, Indonesia",
+  "linkedin": "linkedin.com/in/ryanhadi",
+  
+  "target_role": "Senior Data Analyst",
+  "target_roles_alternative": [
+    "Data Analyst",
+    "Analytics Engineer", 
+    "Business Intelligence Analyst",
+    "Revenue Analyst",
+    "Data Scientist"
+  ],
+  
+  "experience_years": 4,
+  "experience_level": "senior",
+  
+  "current_company": "Sinarmas Land",
+  "current_title": "Senior Data Analyst",
+  "current_start": "Jan 2025",
+  
+  "work_preference": {
+    "remote": true,
+    "hybrid": true,
+    "onsite": false,
+    "locations": ["global"],
+    "timezones": ["UTC-8 to UTC+3"]
+  },
+  
+  "salary": {
+    "target_monthly_usd": 4000,
+    "minimum_monthly_usd": 2000,
+    "flexible": true,
+    "note": "Above $2000, flexible for the right opportunity"
+  },
+  
+  "languages": [
+    {"name": "Bahasa Indonesia", "level": "Native"},
+    {"name": "English", "level": "Working Proficiency (EF SET C2)"}
+  ],
+  
+  "skills": {
+    "query_tools": ["SQL (PostgreSQL, BigQuery)", "Python (Pandas, Scikit-learn)", "Advanced Excel", "Power BI", "Tableau"],
+    "analytics": ["Revenue Forecasting", "Pricing & Demand Analysis", "Cohort Analysis", "KPI Governance", "Data Pipeline Automation", "Workforce Analytics"],
+    "domain": ["Property/Real Estate", "Healthcare", "Executive Reporting"],
+    "tools": ["Claude Code", "Git", "VS Code"]
+  },
+  
+  "education": {
+    "degree": "B.Eng Civil Engineering",
+    "university": "Universitas Pelita Harapan",
+    "gpa": "3.53/4.00"
+  },
+  
+  "certifications": [
+    "Claude Code 101 (2026)",
+    "EF SET English C2 Proficient (2026)",
+    "Data Science: Machine Learning Specialization (2021)",
+    "Google Data Analytics Professional Certificate (2021)"
+  ],
+  
+  "search_keywords": [
+    "data analyst",
+    "senior data analyst",
+    "analytics engineer",
+    "business intelligence",
+    "revenue analyst",
+    "data scientist",
+    "BI analyst"
+  ],
+  
+  "exclude_keywords": [
+    "entry level",
+    "intern",
+    "junior",
+    "0-2 years",
+    "requires visa sponsorship",
+    "onsite only"
+  ],
+  
+  "scoring_weights": {
+    "stack_match": 0.30,
+    "remote_fit": 0.25,
+    "salary_fit": 0.20,
+    "experience_fit": 0.15,
+    "strategic_fit": 0.10
+  }
+}

@@ -1,0 +1,19 @@
+# Output files (generated, not source)
+output/*.pdf
+output/*.docx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vscode/
+.idea/
+
+# Sensitive data (if any)
+.env
+*.key

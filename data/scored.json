@@ -16,7 +16,7 @@
   },
   {
     "id": "job-20260706-004",
-    "title": "Senior Sourcing Manager \u2013 Sourcing Analytics",
+    "title": "Senior Sourcing Manager – Sourcing Analytics",
     "company": "Switzerland Global Enterprise",
     "url": "https://www.remoterocketship.com",
     "score": 72.0,
@@ -61,7 +61,7 @@
   },
   {
     "id": "job-20260706-001",
-    "title": "Senior Director, Analyst \u2013 Data Management and AI Readiness",
+    "title": "Senior Director, Analyst – Data Management and AI Readiness",
     "company": "Gartner",
     "url": "https://gartner.wd5.myworkdayjobs.com/ext/job/remote---united-states/sr-director--analyst---data-management-and-ai-readiness_111319",
     "score": 59.5,
@@ -72,6 +72,326 @@
       "experience_fit": 90,
       "strategic_fit": 65
     },
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-001",
+    "title": "Senior Data Analyst (GTM)",
+    "company": "Docker",
+    "url": "https://jobs.ashbyhq.com/docker/375213bb-7948-4040-bffe-9fcd4ea7e4ef",
+    "score": 83.5,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 70,
+      "salary_fit": 100,
+      "experience_fit": 100,
+      "strategic_fit": 85
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260707-002",
+    "title": "Senior Data Analyst, Onboarding",
+    "company": "Deel",
+    "url": "https://www.deel.com/careers/",
+    "score": 82.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 90,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260707-003",
+    "title": "Senior Data Analyst (Product Marketing)",
+    "company": "Printify",
+    "url": "https://startup.jobs/senior-data-analyst-remote-within-emea-printify-4875784",
+    "score": 74.5,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 90,
+      "salary_fit": 40,
+      "experience_fit": 100,
+      "strategic_fit": 65
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-004",
+    "title": "Senior Data Analyst",
+    "company": "Trafilea Tech E-commerce Group",
+    "url": "https://www.workingnomads.com/jobs/senior-data-analyst-trafilea-939581",
+    "score": 81.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 100,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 65
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260707-005",
+    "title": "Senior Data Analyst (Product Analytics)",
+    "company": "Inside Real Estate",
+    "url": "https://www.glassdoor.com/job-listing/senior-data-analyst-alex-macwilliam-real-estate-JV_KO0,19_KE20,47.htm?jl=1009644203442",
+    "score": 77.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-006",
+    "title": "Senior Data Analyst, Customer Operations",
+    "company": "Scribd, Inc.",
+    "url": "https://www.linkedin.com/jobs/view/senior-data-analyst-customer-operations-at-scribd-inc-4426133843",
+    "score": 76.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 80,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 65
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-007",
+    "title": "Senior Data Analyst - Trust, Safety, and Fraud Analytics",
+    "company": "Rover.com",
+    "url": "https://www.linkedin.com/jobs/view/senior-data-analyst-trust-safety-and-fraud-analytics-at-rover-com-4417971531",
+    "score": 76.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 80,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 65
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-008",
+    "title": "Senior Data Analyst, Reporting",
+    "company": "Calendly",
+    "url": "https://remote.co/job-details/senior-data-analyst-reporting-9dfcae9e-4561-4b13-ba3f-ef4a55948af6",
+    "score": 75.5,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 85
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-009",
+    "title": "Senior Data Analyst - IntelliScript",
+    "company": "Milliman",
+    "url": "https://www.linkedin.com/jobs/view/senior-data-analyst-intelliscript-remote-at-milliman-intelliscript-4414605280",
+    "score": 82.5,
+    "breakdown": {
+      "stack_match": 85,
+      "remote_fit": 80,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260707-010",
+    "title": "Senior Data Analyst",
+    "company": "Vanna Health",
+    "url": "https://himalayas.app/companies/vanna-health/jobs/senior-data-analyst-5780313658",
+    "score": 88.0,
+    "breakdown": {
+      "stack_match": 85,
+      "remote_fit": 70,
+      "salary_fit": 100,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260707-011",
+    "title": "Experienced Data Analyst",
+    "company": "Gainwell Technologies",
+    "url": "https://jobs.gainwelltechnologies.com/job/Any-city-Experienced-Data-Analyst-AR-99999/1405808400/",
+    "score": 83.5,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 80,
+      "salary_fit": 80,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "high"
+  },
+  {
+    "id": "job-20260707-012",
+    "title": "Senior Data Analyst (m/f/d)",
+    "company": "Ambience Healthcare",
+    "url": "https://www.linkedin.com/jobs/view/senior-data-analyst-at-ambience-healthcare-4344496815",
+    "score": 74.0,
+    "breakdown": {
+      "stack_match": 70,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 85
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-013",
+    "title": "Senior Business Data Analyst - Remote",
+    "company": "Optum (UnitedHealth Group)",
+    "url": "https://www.linkedin.com/jobs/view/senior-business-data-analyst-remote-at-optum-4377119084",
+    "score": 77.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-014",
+    "title": "Senior Data Analyst / Analytics Engineer",
+    "company": "Public.com",
+    "url": "https://www.linkedin.com/jobs/view/senior-data-analyst-analytics-engineer-at-public-4349525755",
+    "score": 77.0,
+    "breakdown": {
+      "stack_match": 85,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 70
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-015",
+    "title": "Sr. Data Analyst (Managed Care) - REMOTE",
+    "company": "Molina Healthcare",
+    "url": "https://www.linkedin.com/jobs/view/sr-data-analyst-managed-care-required-remote-at-molina-healthcare-4334464704",
+    "score": 75.5,
+    "breakdown": {
+      "stack_match": 70,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-016",
+    "title": "Senior Data Analyst - GTM",
+    "company": "n8n",
+    "url": "https://jobera.com/remote-job/senior-data-analyst-gtm-n8n-2/",
+    "score": 79.5,
+    "breakdown": {
+      "stack_match": 70,
+      "remote_fit": 100,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 65
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-017",
+    "title": "Sr Data Analyst - Remote",
+    "company": "Stryker",
+    "url": "https://www.linkedin.com/jobs/view/sr-data-analyst-remote-at-stryker-4406259879",
+    "score": 71.5,
+    "breakdown": {
+      "stack_match": 70,
+      "remote_fit": 60,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 85
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-018",
+    "title": "Senior Data Analyst - Strategic Marketing (EMEA)",
+    "company": "Remote - EMEA (Payroll/HR platform)",
+    "url": "https://remote4africa.com/jobs/senior-data-analyst-strategic-marketing-2",
+    "score": 75.5,
+    "breakdown": {
+      "stack_match": 70,
+      "remote_fit": 90,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 50
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-019",
+    "title": "Senior Data Analyst, Customer Success",
+    "company": "9amHealth",
+    "url": "https://remoteyeah.com/jobs/remote-senior-data-analyst-9amhealth",
+    "score": 77.0,
+    "breakdown": {
+      "stack_match": 75,
+      "remote_fit": 70,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 100
+    },
+    "scored_date": "2026-07-07",
+    "recommendation": "medium"
+  },
+  {
+    "id": "job-20260707-020",
+    "title": "Senior Data Analyst",
+    "company": "TestGorilla",
+    "url": "https://testgorilla-1680540968.teamtailor.com/jobs/5437643-senior-data-analyst",
+    "score": 79.5,
+    "breakdown": {
+      "stack_match": 70,
+      "remote_fit": 100,
+      "salary_fit": 60,
+      "experience_fit": 100,
+      "strategic_fit": 65
+    },
+    "scored_date": "2026-07-07",
     "recommendation": "medium"
   }
 ]

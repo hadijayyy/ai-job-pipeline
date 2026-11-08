@@ -1,0 +1,38 @@
+{
+  "name": "jev-job-search",
+  "version": "1.6.0",
+  "private": true,
+  "description": "Finds software internships and new-grad roles, rates them with JEV, fills and verifies each application in seconds, and submits it.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "jev": "./bin/jev.js",
+    "jev-job-search": "./bin/jev.js"
+  },
+  "scripts": {
+    "jev": "tsx src/cli.ts",
+    "setup": "tsx src/cli.ts doctor",
+    "doctor": "tsx src/cli.ts doctor",
+    "discover": "tsx src/cli.ts discover",
+    "apply": "tsx src/cli.ts apply",
+    "tailor": "tsx src/cli.ts tailor",
+    "log": "tsx src/cli.ts log",
+    "status": "tsx src/cli.ts status",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check-types": "tsc --noEmit",
+    "audit": "npm audit --omit=dev"
+  },
+  "dependencies": {
+    "commander": "^15.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9"
+  }
+}

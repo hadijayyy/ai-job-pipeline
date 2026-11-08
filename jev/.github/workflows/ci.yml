@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: typecheck, test, audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx vitest run
+      - run: npm audit --omit=dev --audit-level=high
+      - name: no personal data or keys in tracked files
+        run: |
+          set -euo pipefail
+          if git grep -nE "sk-or-v1-[A-Za-z0-9]{20,}" -- . ':!docs/SAFETY.md' ':!.github/workflows/ci.yml' ':!src/jev/client.ts' ':!tests/jev-client.test.ts'; then
+            echo "OpenRouter key pattern found in tracked files"; exit 1; fi
+          for f in data/profile.json data/bank.json data/voice.local.md applications/all.csv applications/applied.csv applications/manual.csv applications/takehome.csv data/memory.json data/queue.json data/queue.json.bak data/accounts.json data/gmail.json data/policy.json .env; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then echo "$f must never be committed"; exit 1; fi
+          done
+          if git ls-files | grep -E "^data/(runs|cache|imports)/|^documents/(tailored/|.*\.pdf$)"; then echo "run data must never be committed"; exit 1; fi

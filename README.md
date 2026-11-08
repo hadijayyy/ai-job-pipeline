@@ -42,3 +42,10 @@ Edit `profile.json` to update your target role, tech stack, salary range, and pr
 ## GitHub Sync
 
 Jobs and scores auto-commit to this repo daily. Your profile and application history are version-controlled.
+
+## Form filling (`jev/`)
+
+`jev/` is a copy of [qbeka/jev-job-search](https://github.com/qbeka/jev-job-search) (MIT), adapted for senior
+data and analytics roles from Jakarta. It finds roles on company boards, rates them against the profile, fills the
+application forms in Chrome, reads every answer back from the page, and sends only what you approve. It sits
+beside the Hermes pipeline above and does not change it. See `jev/ADAPTATION.md` for what was changed and how to start.

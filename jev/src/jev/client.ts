@@ -1,18 +1,29 @@
 /**
- * HTTP client for the OpenRouter Decisions API.
- *
- * One call = one state + many typed questions. Answers come back under the
+ * The decider: one call = one state + many typed questions. Answers come back under the
  * same keys. The client validates the response, retries transient failures,
  * tracks spend, and refuses to exceed a per-run spend cap.
+ *
+ * Two backends answer. JEV, through the OpenRouter Decisions API, needs an OPENROUTER_API_KEY.
+ * Claude (`claude.ts`) needs no OpenRouter key: it is reached the way the writer is, through
+ * Claude Code or the Claude API. `deciderBackend()` in config.ts picks one.
  */
 import { appendFileSync, mkdirSync } from "node:fs";
 import path from "node:path";
-import { JEV, PATHS } from "../config.js";
+import { DECIDER, deciderBackend, JEV, PATHS, type DeciderBackend } from "../config.js";
+import type { CallOptions, WriterCall } from "../answers/resolve.js";
+import { decisionPrompt, DECIDER_SYSTEM, parseDecisions } from "./claude.js";
 import { DecisionResponse, type Answer, type Questions, type State, type Usage } from "./types.js";
 
 export type FetchLike = (input: string, init: RequestInit) => Promise<Response>;
 
+/** How the Claude backend reaches Claude. The real one is `callClaude` in the writer; tests give their own. */
+export type ClaudeCaller = (prompt: string, system: string, meta: { purpose: WriterCall["purpose"]; jobId: string }, opts: CallOptions) => Promise<string>;
+
 export type JevClientOptions = {
+  /** Which backend answers. The default is `deciderBackend()`. */
+  backend?: DeciderBackend;
+  /** Reaches Claude for the Claude backend. Tests give a fake. */
+  claude?: ClaudeCaller;
   apiKey?: string;
   fetchImpl?: FetchLike;
   endpoint?: string;
@@ -36,6 +47,8 @@ export class JevError extends Error {
 }
 
 export class JevClient {
+  readonly backend: DeciderBackend;
+  private readonly claude: ClaudeCaller | undefined;
   private readonly apiKey: string;
   private readonly fetchImpl: FetchLike;
   private readonly endpoint: string;
@@ -47,13 +60,16 @@ export class JevClient {
   readonly usage: Usage = { calls: 0, inputTokens: 0, outputTokens: 0, costUsd: 0 };
 
   constructor(opts: JevClientOptions = {}) {
+    // A key or a fetch given outright means JEV was asked for; otherwise the environment decides.
+    this.backend = opts.backend ?? (opts.apiKey || opts.fetchImpl ? "openrouter" : deciderBackend());
+    this.claude = opts.claude;
     const key = opts.apiKey ?? process.env.OPENROUTER_API_KEY;
-    if (!key) throw new JevError("OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key.");
-    this.apiKey = key;
+    if (this.backend === "openrouter" && !key) throw new JevError("OPENROUTER_API_KEY is not set. Add your key to .env, or leave it out and Claude will answer instead (JEV_BACKEND=claude).");
+    this.apiKey = key ?? "";
     this.fetchImpl = opts.fetchImpl ?? ((input, init) => fetch(input, init));
     this.endpoint = opts.endpoint ?? JEV.endpoint;
     this.model = opts.model ?? JEV.model;
-    this.spendCapUsd = opts.spendCapUsd ?? JEV.runSpendCapUsd;
+    this.spendCapUsd = opts.spendCapUsd ?? (this.backend === "claude" ? DECIDER.runSpendCapUsd : JEV.runSpendCapUsd);
     this.usageLog = opts.usageLog === undefined ? PATHS.jevUsage : opts.usageLog;
     this.siteUrl = opts.siteUrl ?? process.env.OPENROUTER_SITE_URL;
     this.siteName = opts.siteName ?? process.env.OPENROUTER_SITE_NAME;
@@ -63,8 +79,9 @@ export class JevClient {
   async decide(state: State, questions: Questions, label = "decide"): Promise<Record<string, Answer>> {
     if (Object.keys(questions).length === 0) return {};
     if (this.usage.costUsd >= this.spendCapUsd) {
-      throw new JevError(`JEV spend cap of $${this.spendCapUsd} reached for this run`);
+      throw new JevError(`the spend cap of $${this.spendCapUsd} was reached for this run`);
     }
+    if (this.backend === "claude") return this.decideWithClaude(state, questions, label);
     const body = JSON.stringify({ model: this.model, state, questions });
     const headers: Record<string, string> = {
       Authorization: `Bearer ${this.apiKey}`,
@@ -106,6 +123,33 @@ export class JevClient {
     throw lastError ?? new JevError(`JEV failed on ${label}`);
   }
 
+  /** Asks Claude every question against one state. A reply that does not fit is asked again, and told what was wrong. */
+  private async decideWithClaude(state: State, questions: Questions, label: string): Promise<Record<string, Answer>> {
+    const call = this.claude ?? (await import("../answers/resolve.js")).callClaude;
+    const prompt = decisionPrompt(state, questions);
+    let correction = "";
+    let lastError: JevError | undefined;
+    for (let attempt = 0; attempt < DECIDER.attempts; attempt++) {
+      if (attempt > 0) await sleep(JEV.retryBaseMs * 2 ** (attempt - 1));
+      let used: WriterCall | undefined;
+      try {
+        const text = await call(prompt + correction, DECIDER_SYSTEM, { purpose: "decide", jobId: label }, { model: DECIDER.model, effort: DECIDER.effort, maxTokens: DECIDER.maxOutputTokens, onCall: (c) => (used = c) });
+        const answers = parseDecisions(text, questions);
+        this.record({ answers, model: used?.model ?? DECIDER.model, usage: usageOf(used) }, label);
+        return answers;
+      } catch (err) {
+        // A call that was paid for is counted even when its reply could not be used.
+        if (used) this.record({ answers: {}, model: used.model, usage: usageOf(used) }, label);
+        const message = err instanceof Error ? err.message : String(err);
+        lastError = new JevError(`Claude could not answer ${label}: ${message}`);
+        // A reply that did not fit is shown what was wrong. A call that failed is simply tried again.
+        correction = /^(no answer for|"|the reply)/.test(message) ? `\n\nYour last reply could not be used: ${message}. Reply again with one valid JSON object and nothing else.` : "";
+        if (/ANTHROPIC_API_KEY is not set|could not run /.test(message)) break;
+      }
+    }
+    throw lastError ?? new JevError(`Claude could not answer ${label}`);
+  }
+
   private record(res: DecisionResponse, label: string): void {
     const u = res.usage ?? {};
     this.usage.calls += 1;
@@ -132,6 +176,10 @@ export class JevClient {
       if (a && a.type !== q.type) throw new JevError(`JEV answered ${key} as ${a.type}, expected ${q.type}`);
     }
   }
+}
+
+function usageOf(call: WriterCall | undefined): { input_tokens: number; output_tokens: number; cost: number } {
+  return { input_tokens: call ? call.inputTokens + call.cacheWriteTokens + call.cacheReadTokens : 0, output_tokens: call?.outputTokens ?? 0, cost: call?.costUsd ?? 0 };
 }
 
 function sleep(ms: number): Promise<void> {

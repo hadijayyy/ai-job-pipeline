@@ -26,7 +26,9 @@ twice. A server with a disk keeps it.
 ## Before you start
 
 - A Linux server with Docker and Docker Compose, 2 GB of memory or more. Any small VPS does.
-- An OpenRouter key (JEV) and an Anthropic API key (Claude). Both are paid by use; see `docs/JEV.md` for JEV's cost.
+- An Anthropic API key (`ANTHROPIC_API_KEY`). Claude does all the thinking by default, so no other key is needed. It costs about
+  1.6 cents to rate a posting (a first search rates 100 to 150, later ones only the new) and about 5 cents to fill a form, billed to that key.
+  The daily run stops at 4 dollars a day unless your policy says otherwise. An OpenRouter key is optional and cheaper (`docs/JEV.md`).
 - Optional but recommended: a Telegram bot (talk to @BotFather) and your chat id.
 - A profile, a standing policy and a resume. The profile is the one place the truth can go wrong, so write it yourself:
 

@@ -7,7 +7,7 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, statSync } from "node:fs";
 import path from "node:path";
-import { BROWSER, childEnv, DOCTOR, GMAIL, PATHS, ROOT, WRITER, writerBackend } from "./config.js";
+import { BROWSER, childEnv, DOCTOR, GMAIL, PATHS, ROOT, WRITER, deciderBackend, writerBackend, type DeciderBackend } from "./config.js";
 import { loadAccounts } from "./accounts/config.js";
 import { defaultStore, type SecretStore } from "./accounts/secrets.js";
 import { loadGmail } from "./mail/gmail.js";
@@ -49,7 +49,10 @@ export function checkClaude(): Check {
   return { name: "Claude", ok, detail: ok ? `Claude Code ${r.stdout.trim()} on your subscription` : "the claude command was not found", fix: "Install Claude Code from https://code.claude.com and run `claude` once to sign in, or put ANTHROPIC_API_KEY in .env to use the Claude API instead" };
 }
 
-export function checkKey(key = process.env.OPENROUTER_API_KEY ?? ""): Check {
+export function checkKey(key = process.env.OPENROUTER_API_KEY ?? "", backend: DeciderBackend = deciderBackend()): Check {
+  if (backend === "claude") {
+    return { name: "Decisions", ok: true, detail: "Claude decides which field, which option and how good a fit. No OpenRouter key is needed", fix: "" };
+  }
   const ok = key.trim().length > 0;
   return {
     name: "OpenRouter key",
@@ -120,15 +123,18 @@ export function checkAccounts(store: SecretStore = defaultStore(), files: { acco
   return { name, ok: true, optional: true, detail: `Workday: ${how}, ${file.accounts.filter((a) => a.mode !== "off").length} employer account(s)${verify}`, fix: "" };
 }
 
-/** One tiny JEV call: proves the key is valid and has credit. */
+/** One tiny decision: proves the key is valid and has credit (JEV), or that Claude answers typed questions (Claude). */
 export async function checkKeyOnline(): Promise<Check> {
-  const fix = "Check the key at https://openrouter.ai/keys and that the account has credit";
+  const claude = deciderBackend() === "claude";
+  const name = claude ? "Claude decides" : "JEV answers";
+  const fix = claude ? "Check that Claude works (the Claude check above), or set ANTHROPIC_API_KEY. To use JEV instead, set OPENROUTER_API_KEY" : "Check the key at https://openrouter.ai/keys and that the account has credit";
   try {
     const jev = new JevClient({ usageLog: null });
-    await jev.decide("The sky is blue.", { ok: noul("Does the text mention a colour?") }, "doctor");
-    return { name: "JEV answers", ok: true, detail: `one test call, $${jev.usage.costUsd.toFixed(6)}`, fix: "" };
+    const answers = await jev.decide("The sky is blue.", { ok: noul("Does the text mention a colour?") }, "doctor");
+    const said = (answers.ok as { noul?: number } | undefined)?.noul ?? 0;
+    return { name, ok: said > 0.5, detail: `one test call, $${jev.usage.costUsd.toFixed(6)}`, fix };
   } catch (err) {
-    return { name: "JEV answers", ok: false, detail: (err instanceof Error ? err.message : String(err)).slice(0, 300), fix };
+    return { name, ok: false, detail: (err instanceof Error ? err.message : String(err)).slice(0, 300), fix };
   }
 }
 
@@ -159,7 +165,7 @@ export async function runChecks(online: boolean): Promise<Check[]> {
   const key = checkKey();
   const checks = [checkNode(), checkChrome(), claude, key, profileCheck, checkResume(profile), ...checkOwnWords(), checkQueue(), checkAccounts()];
   if (online) {
-    if (key.ok) checks.push(await checkKeyOnline());
+    if (key.ok && (deciderBackend() !== "claude" || claude.ok)) checks.push(await checkKeyOnline());
     if (claude.ok) checks.push(await checkClaudeOnline());
   }
   return checks;

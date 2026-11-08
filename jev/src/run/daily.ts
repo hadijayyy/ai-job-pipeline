@@ -170,7 +170,7 @@ export async function dailyRun(policy: Policy, o: { target?: number; maxAttempts
     if (challenged.size >= DAILY.challengesStopRun) return end(`${challenged.size} boards asked for a human check, so the run stopped for today`);
     if (attempts >= maxAttempts) return end(`the run opened ${attempts} jobs, its limit`);
     if (deps.now().getTime() >= deadline) return end("the run reached its time limit");
-    if (deps.jevSpentToday() >= policy.jevBudgetUsd) return end(`JEV has cost $${deps.jevSpentToday().toFixed(2)} today, the limit in your policy`);
+    if (deps.jevSpentToday() >= policy.jevBudgetUsd) return end(`the decisions have cost $${deps.jevSpentToday().toFixed(2)} today, the limit in your policy`);
 
     const pauses = loadPauses(deps.pausesFile);
     const sentHere = (b: string) => (day.board.get(b) ?? 0) + (o.dry ? summary.sent.filter((s) => s.board === b).length : 0);

@@ -124,7 +124,7 @@ export async function logNotes(profile: Profile, entries: QueueEntry[]): Promise
   return out;
 }
 
-export type WriterCall = { at: string; purpose: "resolve" | "log" | "tailor"; jobId: string; model: string; inputTokens: number; cacheWriteTokens: number; cacheReadTokens: number; outputTokens: number; costUsd: number; ms: number };
+export type WriterCall = { at: string; purpose: "resolve" | "log" | "tailor" | "decide"; jobId: string; model: string; inputTokens: number; cacheWriteTokens: number; cacheReadTokens: number; outputTokens: number; costUsd: number; ms: number };
 
 /** What the writer has used in this process. costUsd is what the calls would cost at API prices; on a Claude subscription they draw on the plan instead. */
 export const writerUsage = { calls: 0, inputTokens: 0, outputTokens: 0, costUsd: 0 };
@@ -132,12 +132,15 @@ export const writerUsage = { calls: 0, inputTokens: 0, outputTokens: 0, costUsd:
 type Usage = { input_tokens?: number | undefined; cache_creation_input_tokens?: number | undefined; cache_read_input_tokens?: number | undefined; output_tokens?: number | undefined };
 type Envelope = { result?: string; is_error?: boolean; total_cost_usd?: number; duration_ms?: number; usage?: Usage | undefined };
 
-function recordWriterCall(envelope: Envelope, meta: { purpose: WriterCall["purpose"]; jobId: string }): void {
+/** Per-call choices for callers that are not the writer (the decider): another model, effort or length, and a way to read what the call cost. */
+export type CallOptions = { model?: string; effort?: string; maxTokens?: number; onCall?: (call: WriterCall) => void };
+
+function recordWriterCall(envelope: Envelope, meta: { purpose: WriterCall["purpose"]; jobId: string }, opts: CallOptions = {}): void {
   const u = envelope.usage ?? {};
   const call: WriterCall = {
     at: new Date().toISOString(),
     ...meta,
-    model: WRITER.model,
+    model: opts.model ?? WRITER.model,
     inputTokens: u.input_tokens ?? 0,
     cacheWriteTokens: u.cache_creation_input_tokens ?? 0,
     cacheReadTokens: u.cache_read_input_tokens ?? 0,
@@ -145,10 +148,13 @@ function recordWriterCall(envelope: Envelope, meta: { purpose: WriterCall["purpo
     costUsd: envelope.total_cost_usd ?? 0,
     ms: envelope.duration_ms ?? 0,
   };
+  // A decision is recorded by the decider in the decisions log, so it is not counted twice here.
+  if (meta.purpose === "decide") return void opts.onCall?.(call);
   writerUsage.calls += 1;
   writerUsage.inputTokens += call.inputTokens + call.cacheWriteTokens + call.cacheReadTokens;
   writerUsage.outputTokens += call.outputTokens;
   writerUsage.costUsd += call.costUsd;
+  opts.onCall?.(call);
   if (process.env.NODE_ENV === "test") return; // a test's fake call is not spend
   try {
     mkdirSync(PATHS.runs, { recursive: true });
@@ -190,7 +196,7 @@ export function apiCostUsd(u: Usage): number {
 }
 
 /** The Claude API, billed to ANTHROPIC_API_KEY. The system prompt is cached by the provider, as with Claude Code. */
-async function callApi(prompt: string, system: string, meta: { purpose: WriterCall["purpose"]; jobId: string }): Promise<string> {
+async function callApi(prompt: string, system: string, meta: { purpose: WriterCall["purpose"]; jobId: string }, opts: CallOptions = {}): Promise<string> {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) throw new Error("ANTHROPIC_API_KEY is not set. Add it to .env, or remove WRITER_BACKEND=api to use Claude Code.");
   const started = Date.now();
@@ -198,8 +204,8 @@ async function callApi(prompt: string, system: string, meta: { purpose: WriterCa
     method: "POST",
     headers: { "content-type": "application/json", "x-api-key": key, "anthropic-version": WRITER.apiVersion },
     body: JSON.stringify({
-      model: WRITER.model,
-      max_tokens: WRITER.maxOutputTokens,
+      model: opts.model ?? WRITER.model,
+      max_tokens: opts.maxTokens ?? WRITER.maxOutputTokens,
       system: [{ type: "text", text: system, cache_control: { type: "ephemeral" } }],
       messages: [{ role: "user", content: prompt }],
     }),
@@ -213,17 +219,17 @@ async function callApi(prompt: string, system: string, meta: { purpose: WriterCa
   }
   const reply = ApiReply.parse(body);
   const text = reply.content.filter((c) => c.type === "text").map((c) => c.text ?? "").join("");
-  recordWriterCall({ result: text, usage: reply.usage, total_cost_usd: apiCostUsd(reply.usage ?? {}), duration_ms: Date.now() - started }, meta);
+  recordWriterCall({ result: text, usage: reply.usage, total_cost_usd: apiCostUsd(reply.usage ?? {}), duration_ms: Date.now() - started }, meta, opts);
   return text;
 }
 
-function callWriter(prompt: string, system: string, meta: { purpose: WriterCall["purpose"]; jobId: string }): Promise<string> {
-  if (writerBackend() === "api") return callApi(prompt, system, meta);
+function callWriter(prompt: string, system: string, meta: { purpose: WriterCall["purpose"]; jobId: string }, opts: CallOptions = {}): Promise<string> {
+  if (writerBackend() === "api") return callApi(prompt, system, meta, opts);
   return new Promise((resolve, reject) => {
     mkdirSync(WRITER.cwd, { recursive: true });
     const child = spawn(
       WRITER.command,
-      ["-p", "--model", WRITER.model, "--effort", effortFor(meta.purpose), "--output-format", "json", "--tools", "", "--no-session-persistence", "--strict-mcp-config", "--system-prompt", system],
+      ["-p", "--model", opts.model ?? WRITER.model, "--effort", opts.effort ?? effortFor(meta.purpose), "--output-format", "json", "--tools", "", "--no-session-persistence", "--strict-mcp-config", "--system-prompt", system],
       { stdio: ["pipe", "pipe", "pipe"], cwd: WRITER.cwd, env: childEnv(WRITER.env) },
     );
     let out = "";
@@ -243,7 +249,7 @@ function callWriter(prompt: string, system: string, meta: { purpose: WriterCall[
       if (code !== 0) return reject(new Error(`the writer exited with ${code}: ${err.slice(0, 300)}`));
       try {
         const envelope = JSON.parse(out) as Envelope;
-        recordWriterCall(envelope, meta);
+        recordWriterCall(envelope, meta, opts);
         if (envelope.is_error || typeof envelope.result !== "string") return reject(new Error(`the writer failed: ${String(envelope.result).slice(0, 300)}`));
         resolve(envelope.result);
       } catch {
@@ -253,6 +259,9 @@ function callWriter(prompt: string, system: string, meta: { purpose: WriterCall[
     child.stdin.end(prompt);
   });
 }
+
+/** One Claude call for the decider: its own model and length, and a callback with what the call used. */
+export const callClaude = (prompt: string, system: string, meta: { purpose: WriterCall["purpose"]; jobId: string }, opts: CallOptions): Promise<string> => callWriter(prompt, system, meta, opts);
 
 /** One plain writer call with a system prompt, for checks. Recorded like any other call. */
 export const askWriter = (prompt: string, system: string): Promise<string> => callWriter(prompt, system, { purpose: "log", jobId: "doctor" });

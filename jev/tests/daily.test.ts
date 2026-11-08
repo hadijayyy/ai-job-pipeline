@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { DAILY } from "../src/config.js";
 import type { QueueEntry } from "../src/jobs/queue.js";
 import { boardOf, clearStop, countToday, dailyRun, formatDaily, loadPauses, localDay, pauseBoard, requestStop, saveDaily, stopRequested, type DailyDeps, type Outcome } from "../src/run/daily.js";
-import { loadPolicy, Policy, policyRefuses } from "../src/run/policy.js";
+import { defaultDecisionBudget, loadPolicy, Policy, policyRefuses } from "../src/run/policy.js";
 import { agentPlist, installSchedule, removeSchedule, scheduleStatus, timeOfDay } from "../src/run/schedule.js";
 
 const START = new Date(2026, 9, 5, 9, 0, 0);
@@ -76,7 +76,7 @@ describe("the standing policy", () => {
     writeFileSync(file, JSON.stringify({ target: 500 }));
     expect(() => loadPolicy(file)).toThrow(/target/);
     writeFileSync(file, JSON.stringify({ target: 5 }));
-    expect(loadPolicy(file)).toMatchObject({ target: 5, where: [], jevBudgetUsd: DAILY.jevBudgetUsd });
+    expect(loadPolicy(file)).toMatchObject({ target: 5, where: [], jevBudgetUsd: defaultDecisionBudget() });
   });
 
   it("ships an example that is valid", () => {
@@ -193,7 +193,7 @@ describe("the daily run", () => {
     expect(time.sent.length).toBeLessThan(4);
     const w = world(many());
     const budget = await dailyRun(policy({ jevBudgetUsd: 0.004 }), { dry: false }, w.deps);
-    expect(budget.stoppedBecause).toMatch(/JEV has cost/);
+    expect(budget.stoppedBecause).toMatch(/decisions have cost/);
     expect(w.ran).toHaveLength(2);
   });
 

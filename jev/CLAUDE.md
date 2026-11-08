@@ -98,15 +98,19 @@ doctor` says what is in place and what to do next.
   asks for a signature, or for something the profile does not say, is
   closed and listed in `applications/manual.csv` with the reason (`src/run/outcome.ts`).
   It is never answered to get it through.
-- **No secrets in code or logs.** The OpenRouter key is read from `.env` by
+- **No secrets in code or logs.** The OpenRouter key (optional: with none, Claude
+  answers the typed questions, `src/jev/claude.ts`) is read from `.env` by
   `src/config.ts` and nowhere else. Everything printed goes through
   `scrub` (`src/util/redact.ts`), links are kept as `safeUrl`, and every
   child process is started with `childEnv()`, an allow-list that holds no
   key. A test fails on a spawn without it. Keep it that way.
-- **JEV decides, code acts, Claude writes.** Anything that is a typed
+- **The decider decides, code acts, Claude writes.** Anything that is a typed
   question (which field, which option, which page, how good a fit) goes
-  through JEV with criteria written as definitions. Free text and the fields
-  JEV was unsure of are Claude's job, only from the facts in the profile.
+  through the decider (`JevClient`: JEV through OpenRouter when there is a key,
+  Claude otherwise, `deciderBackend()`) with criteria written as definitions.
+  Claude's stated probabilities are less well calibrated than JEV's, so no
+  confidence gate is loosened for it. Free text and the fields
+  the decider was unsure of are Claude's job, only from the facts in the profile.
   When the CLI needs Claude it runs Claude Code headless on the person's
   subscription, or, with `ANTHROPIC_API_KEY` in `.env`, calls the Claude
   Messages API directly (`src/answers/resolve.ts`), on the model and effort

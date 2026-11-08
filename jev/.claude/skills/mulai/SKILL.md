@@ -42,10 +42,10 @@ Then do the first stage that is not done. If a stage was done on an earlier day,
 
 ## Stage by stage
 
-**1. Persiapan.** Follow `/setup` step 1 and step 5. Two keys are involved: the OpenRouter key (the part that costs money,
-cents a day) and Claude. Tell them the cost before they pay. How the key goes in depends on where this runs:
-on a Mac, `/setup` step 5; on Linux, `/setup` step 5's server route, which uses the secure form and never the chat.
-Never ask for a key in the chat. If one is pasted in anyway, tell them to delete it at openrouter.ai/keys and make a new one.
+**1. Persiapan.** Follow `/setup` step 1 and step 5. By default Claude does all the thinking, so there is no OpenRouter key
+to get: on Claude Code nothing needs adding, and on a server only `ANTHROPIC_API_KEY`. Tell them the cost before they start
+(`/setup` step 5 has the numbers): Claude costs more per decision than the optional OpenRouter route, and a first job search
+is the biggest single cost. Never ask for a key in the chat. If one is pasted in anyway, tell them to delete it and make a new one.
 
 **2. Profil.** Follow `/setup` steps 2 to 4. Ask in small groups. Where the resume answers a question, do not ask it.
 Read back a short summary and let them correct it. The profile is the one place the truth can go wrong, so say that once,

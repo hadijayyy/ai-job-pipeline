@@ -86,34 +86,34 @@ Rules for this step:
    `data/voice.local.md` and the drafts until it does. One or two rounds is
    enough.
 
-## 5. The key
+## 5. Who answers the form questions
 
-JEV is the only part of this tool the user is billed for. Tell them the
-numbers before they pay: about 6 cents each time the tool finds jobs, and
-about 1 cent for every 10 applications. Five dollars of credit lasts for
-months.
+Two models share the thinking. Claude writes the sentences. The typed choices (which
+field, which option, how good a fit) are answered by **Claude too, by default, so there is
+no OpenRouter key to get**. Say that to the user: it is the simplest path.
 
-1. Ask them to create a key at https://openrouter.ai/keys and add a few
-   dollars of credit.
-2. Put the key in. Pick the route by where this runs (`uname`):
-   - **A Mac, theirs:** run `cp .env.example .env`, then `open -e .env` so the
-     file opens in a text editor. Ask them to paste the key after
-     `OPENROUTER_API_KEY=`, save, and tell you when it is done.
-   - **Linux, in a cloud Claude Code session:** call the `request_credential`
-     tool for host `openrouter.ai`. It shows the user a secure form, so the
-     key never passes through the chat and you never see it. Then run
-     `cp .env.example .env` and set `OPENROUTER_API_KEY=placeholder` in it:
-     the tool needs a value to start, and the network proxy puts the real key
-     in the request. If `doctor --online` then fails with a 401, say so plainly.
-     This route has not been run end to end, so check it before relying on it.
-   - **A server running the Docker setup:** the key is in the container's
-     environment (`docs/CLOUD.md`). Do not create a `.env` there.
-3. Run `npx jev doctor --online`. It makes one tiny JEV call and
-   one tiny Claude call to prove both work.
+- **Claude Code on a subscription** (a Mac, or a cloud Claude Code session): nothing to
+  add. Claude is reached through the user's own sign-in.
+- **A server** (the Docker setup): `ANTHROPIC_API_KEY` in the container's environment
+  (`docs/CLOUD.md`). Do not create a `.env` there.
 
-Never ask the user to paste the key into the chat, and never print it. If
-they paste it into the chat anyway, tell them to delete that key at
-openrouter.ai/keys and create a new one, because a key in a chat is exposed.
+Tell them the costs before they start. Claude costs more per decision than JEV does: about
+1.6 cents to rate one posting (a first search rates 100 to 150 and later ones only the new
+ones), and about 5 cents to fill one form. On a subscription that uses the plan rather than
+a bill; with an API key it is billed to the key. The daily run stops at a daily ceiling
+(`jevBudgetUsd` in the policy, 4 dollars when Claude decides).
+
+**The cheaper option, if they want it.** JEV through OpenRouter costs about 1 cent per 10
+applications and gives real probabilities, which Claude cannot. To use it, they create a key
+at https://openrouter.ai/keys, add a few dollars, and put it after `OPENROUTER_API_KEY=` in
+`.env` (on a Mac: `cp .env.example .env`, then `open -e .env`). With a key present JEV
+answers; `JEV_BACKEND=claude` keeps Claude. Do not offer this first.
+
+Run `npx jev doctor --online`. It makes one tiny decision and one tiny Claude call to prove
+both work.
+
+Never ask the user to paste any key into the chat, and never print one. If they paste one
+anyway, tell them to delete that key and make a new one, because a key in a chat is exposed.
 
 ## 6. Find jobs
 

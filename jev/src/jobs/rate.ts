@@ -140,7 +140,7 @@ export function scoreFromAnswers(job: Job, answers: Record<string, Answer>, now 
   else if (n("needs_advanced_degree") > 0.7) skipReason = "advanced degree required";
   else if (c("work_auth").choice === "us_no_sponsorship" && c("work_auth").confidence >= 0.5 && !us.authorized) skipReason = "US role, no sponsorship";
   else if (c("work_auth").choice === "us_citizenship_required" && c("work_auth").confidence >= 0.5 && !us.citizen) skipReason = "US citizenship or clearance required";
-  else if (c("work_auth").choice === "other_country_required" && c("work_auth").confidence >= 0.6) skipReason = "requires the right to work in another country";
+  else if (c("work_auth").choice === "other_country_required" && c("work_auth").confidence >= 0.5) skipReason = "requires the right to work in another country";
   else if (job.ats === "other" && n("needs_account") > 0.9) skipReason = "needs an account to apply";
   else if (n("requires_references") > 0.85) skipReason = "references required";
 

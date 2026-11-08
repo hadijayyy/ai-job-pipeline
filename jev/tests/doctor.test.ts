@@ -14,13 +14,18 @@ describe("doctor", () => {
     expect(checkNode("20.11.1").ok).toBe(false);
   });
   it("wants a key, and never prints it", () => {
-    expect(checkKey("").ok).toBe(false);
+    expect(checkKey("", "openrouter").ok).toBe(false);
     // Built at run time, so no key-shaped text sits in the repository.
     const made = `sk-or-v1-${"k".repeat(12)}`;
-    const c = checkKey(made);
+    const c = checkKey(made, "openrouter");
     expect(c.ok).toBe(true);
     expect(JSON.stringify(c)).not.toContain(made);
-    expect(checkKey("").fix).toMatch(/Do not paste the key into a chat/);
+    expect(checkKey("", "openrouter").fix).toMatch(/Do not paste the key into a chat/);
+  });
+  it("asks for no OpenRouter key when Claude decides", () => {
+    const c = checkKey("", "claude");
+    expect(c.ok).toBe(true);
+    expect(c.detail).toMatch(/No OpenRouter key is needed/);
   });
   it("reads the example profile and names a missing one", () => {
     const { check, profile } = checkProfile(new URL("../data/profile.example.json", import.meta.url).pathname);

@@ -5,8 +5,11 @@
  */
 import { existsSync, readFileSync } from "node:fs";
 import { z } from "zod";
-import { DAILY, DISCOVER, PATHS } from "../config.js";
+import { DAILY, DISCOVER, PATHS, deciderBackend } from "../config.js";
 import type { QueueEntry } from "../jobs/queue.js";
+
+/** The most the decider may cost in a day when the policy names no number: JEV is cheap, Claude costs more per form. */
+export const defaultDecisionBudget = (): number => (deciderBackend() === "claude" ? DAILY.claudeBudgetUsd : DAILY.jevBudgetUsd);
 
 export const Policy = z.object({
   version: z.literal(1).default(1),
@@ -25,7 +28,7 @@ export const Policy = z.object({
   /** A resume written for each job, and a cover letter where a form has a box for one. */
   documents: z.object({ tailor: z.boolean().default(false), cover: z.boolean().default(false) }).default({}),
   /** The most JEV may cost in one day. The run stops when it is reached. */
-  jevBudgetUsd: z.number().min(0).default(DAILY.jevBudgetUsd),
+  jevBudgetUsd: z.number().min(0).default(() => defaultDecisionBudget()),
 });
 export type Policy = z.infer<typeof Policy>;
 

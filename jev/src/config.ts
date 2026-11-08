@@ -434,6 +434,8 @@ export const DAILY = {
   maxMinutes: 90,
   /** The most JEV may cost in a day before the run stops, when the policy names no number. */
   jevBudgetUsd: 0.5,
+  /** The same when Claude decides instead of JEV (at API prices; on a subscription it is a ceiling on use, not a bill). A form costs several cents there. */
+  claudeBudgetUsd: 4,
   /** The name the scheduled run is registered under with macOS, and the time it runs when none is given. */
   label: "com.jev-job-search.daily",
   at: "09:00",
@@ -554,6 +556,40 @@ export function writerBackend(): WriterBackend {
   if (asked === "claude-code" || asked === "api") return asked;
   return process.env.ANTHROPIC_API_KEY ? "api" : "claude-code";
 }
+
+export type DeciderBackend = "openrouter" | "claude";
+
+/**
+ * Who answers the typed questions (which field, which option, how good a fit). JEV through
+ * OpenRouter gives real probabilities for a fraction of a cent. Claude needs no OpenRouter key and
+ * reaches the same typed answers, but its probabilities are its own stated beliefs, which are less
+ * well calibrated, and each call costs more. JEV_BACKEND=openrouter or claude chooses; with neither,
+ * an OPENROUTER_API_KEY means JEV and no key means Claude.
+ */
+export function deciderBackend(env: NodeJS.ProcessEnv = process.env): DeciderBackend {
+  const asked = (env.JEV_BACKEND ?? "").trim().toLowerCase();
+  if (asked === "claude" || asked === "openrouter") return asked;
+  return env.OPENROUTER_API_KEY?.trim() ? "openrouter" : "claude";
+}
+
+/** Claude as the decider (`src/jev/claude.ts`). It reaches Claude the way the writer does: Claude Code, or the API with ANTHROPIC_API_KEY. */
+export const DECIDER = {
+  /** JEV_DECIDER_MODEL names another model. Costs are estimated at the writer model's prices. */
+  get model(): string {
+    return process.env.JEV_DECIDER_MODEL?.trim() || WRITER.model;
+  },
+  effort: "low",
+  /** A form with many fields answers every one of them in one reply. */
+  maxOutputTokens: 8_000,
+  /** Tries per call: a reply that is not valid JSON, or a call that failed, is asked again. */
+  attempts: 3,
+  /** No stated probability is above this: Claude is never certain in the way a logprob can be. */
+  maxProbability: 0.99,
+  /** Hard stop for one run, in USD at API prices. Claude costs more per call than JEV, and a first search rates every posting. */
+  runSpendCapUsd: 6.0,
+  /** Calls at once. Each is a Claude request, and a subscription has its own limits. */
+  rateConcurrency: 4,
+} as const;
 
 /** The answer memory: what the writer already answered, reused instead of asked again. */
 export const MEMORY = {

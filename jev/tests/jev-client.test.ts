@@ -58,11 +58,20 @@ describe("JevClient", () => {
     await expect(jev.decide("s", questions)).rejects.toThrow(/spend cap/);
   });
 
-  it("requires an api key", () => {
-    const saved = process.env.OPENROUTER_API_KEY;
+  it("requires an api key when JEV is asked for, and uses Claude when there is none", () => {
+    const saved = { key: process.env.OPENROUTER_API_KEY, backend: process.env.JEV_BACKEND };
     delete process.env.OPENROUTER_API_KEY;
-    expect(() => new JevClient({ usageLog: null })).toThrow(/OPENROUTER_API_KEY/);
-    if (saved) process.env.OPENROUTER_API_KEY = saved;
+    delete process.env.JEV_BACKEND;
+    try {
+      expect(new JevClient({ usageLog: null }).backend).toBe("claude");
+      expect(() => new JevClient({ usageLog: null, backend: "openrouter" })).toThrow(/OPENROUTER_API_KEY/);
+      process.env.JEV_BACKEND = "openrouter";
+      expect(() => new JevClient({ usageLog: null })).toThrow(/OPENROUTER_API_KEY/);
+    } finally {
+      if (saved.key !== undefined) process.env.OPENROUTER_API_KEY = saved.key;
+      if (saved.backend !== undefined) process.env.JEV_BACKEND = saved.backend;
+      else delete process.env.JEV_BACKEND;
+    }
   });
 });
 

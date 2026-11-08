@@ -5,7 +5,7 @@
  * pure, so the same numbers can be printed after a run or over all time.
  */
 import { existsSync, readFileSync } from "node:fs";
-import { PATHS, writerBackend } from "../config.js";
+import { PATHS, deciderBackend, writerBackend } from "../config.js";
 
 export type JevLine = { at: string; label: string; input_tokens?: number; output_tokens?: number; cost?: number };
 export type WriterLine = { at: string; purpose: string; jobId: string; inputTokens: number; cacheWriteTokens: number; cacheReadTokens: number; outputTokens: number; costUsd: number };
@@ -86,7 +86,7 @@ const usd = (n: number) => `$${n.toFixed(n < 0.01 ? 5 : n < 1 ? 4 : 2)}`;
 export function formatCost(c: CostSummary): string {
   const row = (name: string, b: Bucket) => `  ${name.padEnd(12)} ${String(b.calls).padStart(5)} calls  ${String(b.inputTokens).padStart(9)} in  ${String(b.outputTokens).padStart(8)} out  ${usd(b.costUsd)}`;
   const api = writerBackend() === "api";
-  const lines = ["JEV (billed to your OpenRouter key)"];
+  const lines = [deciderBackend() === "claude" ? "Decisions by Claude (at API prices; on a subscription this is use of the plan, not a bill)" : "JEV (billed to your OpenRouter key)"];
   for (const [k, b] of Object.entries(c.jev)) lines.push(row(k, b));
   const claudeCalls = Object.values(c.claude).reduce((n, b) => n + b.calls, 0);
   if (api) {

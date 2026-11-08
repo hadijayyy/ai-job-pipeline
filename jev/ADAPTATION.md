@@ -44,15 +44,31 @@ language. `docs/MULAI.md` explains the six stages in Indonesian.
 
 ## Using it on a Mac
 
-Needs Node 22, Google Chrome, Claude Code, and an OpenRouter key for JEV.
+Needs Node 22, Google Chrome and Claude Code. No OpenRouter key is needed: Claude answers the typed choices too.
 
 ```bash
 cd jev
 npm install
 cp data/profile.analyst.example.json data/profile.json   # then fill in your own details; the file is git-ignored
-cp .env.example .env                                      # add the OpenRouter key; also git-ignored
-claude                                                    # then /setup, /discover, /apply
+claude                                                    # then /mulai, or /setup, /discover, /apply
 ```
+
+An OpenRouter key in `.env` makes JEV answer the typed choices instead, which is cheaper and gives real probabilities.
+See "Claude or JEV" below.
+
+## Claude or JEV
+
+| | Claude (default, no key) | JEV (an `OPENROUTER_API_KEY`) |
+|---|---|---|
+| Key to get | None. Claude Code's sign-in, or `ANTHROPIC_API_KEY` on a server | An OpenRouter key and credit |
+| Cost | About 1.6 cents to rate a posting, about 5 cents to fill a form, at API prices | About 1 cent per 10 applications |
+| Probabilities | Claude's own stated beliefs, less well calibrated. The prompt asks for spread-out numbers when the page does not settle a question, and no number is above 0.99 | Read off the model's token probabilities |
+| Speed | About 5 to 20 seconds a call | About half a second |
+| What it does to the gates | Nothing: every confidence gate in `FORM` is unchanged, so Claude's lower confidence sends more fields to the writer or to you | |
+
+`JEV_BACKEND=claude` or `openrouter` chooses. With neither, a key means JEV and no key means Claude.
+Claude as the decider was run against a real posting and a real captured form in a session, and its answers were sensible,
+but a week of watched use is the real test. The unit tests use a stand-in for Claude.
 
 `data/profile.json`, `.env`, `applications/` and `documents/` are git-ignored by `jev/.gitignore`, so
 personal data does not reach this repository.

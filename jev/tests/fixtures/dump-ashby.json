@@ -1,0 +1,190 @@
+{
+  "url": "https://jobs.ashbyhq.com/Superhuman%20Platform%20Inc/134c282c-2837-44a8-9f7c-74ca39486490/application",
+  "title": "Software Engineer, Full-Stack - GPTZero, Early Career @ Superhuman",
+  "context": "Software Engineer, Full-Stack - GPTZero, Early Career | Location | Hub - Toronto | Employment Type | Full time | Location Type | Hybrid | Department",
+  "fields": [
+    {
+      "id": "f0",
+      "selector": "#form > div:nth-of-type(1) > div > input",
+      "kind": "file",
+      "name": "",
+      "label": "Autofill from resume",
+      "hint": "Upload your resume here to autofill key application fields.",
+      "placeholder": "",
+      "required": false,
+      "value": "",
+      "options": [],
+      "accept": "application/pdf,.pdf,application/msword,.doc,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx,application/vnd.oasis.opendocument.text,.odt,application/rtf,.rtf,text/plain,.txt,text/markdown,.md",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f1",
+      "selector": "#_systemfield_name",
+      "kind": "text",
+      "name": "_systemfield_name",
+      "label": "Legal Full Name",
+      "hint": "",
+      "placeholder": "Type here...",
+      "required": true,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f2",
+      "selector": "#\\35 c910630-62f3-4fdb-b1ef-206aaaad307f",
+      "kind": "text",
+      "name": "5c910630-62f3-4fdb-b1ef-206aaaad307f",
+      "label": "Preferred First Name",
+      "hint": "",
+      "placeholder": "Type here...",
+      "required": false,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f3",
+      "selector": "#_systemfield_email",
+      "kind": "email",
+      "name": "_systemfield_email",
+      "label": "Email",
+      "hint": "",
+      "placeholder": "hello@example.com...",
+      "required": true,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f4",
+      "selector": "#dede2482-03c0-4dec-ae77-aeacf662a1bc",
+      "kind": "tel",
+      "name": "dede2482-03c0-4dec-ae77-aeacf662a1bc",
+      "label": "Phone",
+      "hint": "",
+      "placeholder": "1-415-555-1234...",
+      "required": true,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f5",
+      "selector": "#_systemfield_resume",
+      "kind": "file",
+      "name": "_systemfield_resume",
+      "label": "Resume",
+      "hint": "or drag and drop here",
+      "placeholder": "",
+      "required": true,
+      "value": "",
+      "options": [],
+      "accept": "application/pdf,.pdf,application/msword,.doc,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx,application/vnd.oasis.opendocument.text,.odt,application/rtf,.rtf,text/plain,.txt,text/markdown,.md,image/*,video/*,audio/*",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f6",
+      "selector": "#\\33 8e5a5c9-73d5-466c-9bd4-f7b3b181cd8b",
+      "kind": "url",
+      "name": "38e5a5c9-73d5-466c-9bd4-f7b3b181cd8b",
+      "label": "LinkedIn URL",
+      "hint": "",
+      "placeholder": "https://example.com...",
+      "required": true,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f7",
+      "selector": "#\\36 af88608-5642-4dc2-a825-154d22bdd16e",
+      "kind": "text",
+      "name": "6af88608-5642-4dc2-a825-154d22bdd16e",
+      "label": "How did you hear about this job?",
+      "hint": "",
+      "placeholder": "Type here...",
+      "required": false,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f8",
+      "selector": "#form > div:nth-of-type(2) > div > div:nth-of-type(8) > div > input",
+      "kind": "combobox",
+      "name": "",
+      "label": "Location",
+      "hint": "",
+      "placeholder": "Start typing...",
+      "required": false,
+      "value": "",
+      "options": [],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    },
+    {
+      "id": "f9",
+      "selector": "#\\34 702ce3e-fb31-4ec1-bdc7-a3ef927be81c_2699836a-2cdc-49f1-b35d-4029ad397446-labeled-radio-0",
+      "kind": "radio",
+      "name": "4702ce3e-fb31-4ec1-bdc7-a3ef927be81c_2699836a-2cdc-49f1-b35d-4029ad397446",
+      "label": "When is your expected graduation date?",
+      "hint": "",
+      "placeholder": "",
+      "required": false,
+      "value": "",
+      "options": [
+        {
+          "value": "on",
+          "label": "2025"
+        },
+        {
+          "value": "on",
+          "label": "2026"
+        },
+        {
+          "value": "on",
+          "label": "January - June 2027"
+        },
+        {
+          "value": "on",
+          "label": "December 2027"
+        },
+        {
+          "value": "on",
+          "label": "May/June 2028"
+        },
+        {
+          "value": "on",
+          "label": "Decmeber 2028"
+        },
+        {
+          "value": "on",
+          "label": "2029"
+        }
+      ],
+      "accept": "",
+      "maxLength": null,
+      "autocomplete": ""
+    }
+  ],
+  "submitSelectors": [
+    "#form > button  /* Submit Application */"
+  ],
+  "frames": []
+}

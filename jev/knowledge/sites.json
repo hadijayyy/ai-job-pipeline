@@ -1,0 +1,670 @@
+{
+ "version": 1,
+ "sites": {
+  "apply.workable.com": {
+   "controls": {
+    "text": {
+     "method": "typed",
+     "worked": 3
+    },
+    "email": {
+     "method": "script",
+     "worked": 3
+    },
+    "tel:intl-tel": {
+     "method": "script",
+     "worked": 2
+    },
+    "textarea": {
+     "method": "script",
+     "worked": 3
+    },
+    "radio:label-drawn": {
+     "method": "script",
+     "worked": 2
+    },
+    "combobox": {
+     "method": "script",
+     "worked": 15
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 22,
+   "ready": 11,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "ats.rippling.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 4
+    },
+    "combobox:testid-select": {
+     "method": "clicked",
+     "worked": 4
+    },
+    "combobox": {
+     "method": "clicked",
+     "worked": 4
+    },
+    "radio:drawn-radio": {
+     "method": "script",
+     "worked": 4
+    },
+    "checkbox:label-drawn": {
+     "method": "script",
+     "worked": 4
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 16,
+   "ready": 13,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "c3.ai": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "email": {
+     "method": "script",
+     "worked": 1
+    },
+    "combobox": {
+     "method": "clicked",
+     "worked": 1
+    },
+    "tel": {
+     "method": "script",
+     "worked": 1
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 1,
+   "ready": 1,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "calpionplutus.bamboohr.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "combobox:menu-button": {
+     "method": "clicked",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 1,
+   "ready": 1,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "careers.activision.com": {
+   "controls": {
+    "email": {
+     "method": "script",
+     "worked": 2
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 1,
+   "ready": 1,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "careers.amd.com": {
+   "controls": {},
+   "signIn": true,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "careers.withwaymo.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 5
+    },
+    "email": {
+     "method": "script",
+     "worked": 5
+    },
+    "select": {
+     "method": "script",
+     "worked": 5
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 5
+    },
+    "tel:intl-tel": {
+     "method": "typed",
+     "worked": 3
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 13,
+   "ready": 7,
+   "trouble": {
+    "tel:intl-tel": {
+     "why": "the page did not keep the value",
+     "count": 5
+    }
+   },
+   "updated": "2026-10-02"
+  },
+  "eaiti.applytojob.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 6
+    },
+    "email": {
+     "method": "script",
+     "worked": 6
+    },
+    "tel": {
+     "method": "script",
+     "worked": 6
+    },
+    "select": {
+     "method": "script",
+     "worked": 6
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 5,
+   "ready": 5,
+   "trouble": {},
+   "updated": "2026-10-03"
+  },
+  "innovativesystems.applytojob.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "email": {
+     "method": "script",
+     "worked": 1
+    },
+    "tel": {
+     "method": "script",
+     "worked": 1
+    },
+    "select": {
+     "method": "script",
+     "worked": 1
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 1
+    },
+    "radio": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 1,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "job-boards.eu.greenhouse.io": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "combobox:react-select": {
+     "method": "script",
+     "worked": 1
+    },
+    "tel:intl-tel": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "job-boards.greenhouse.io": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 3
+    },
+    "combobox:react-select": {
+     "method": "script",
+     "worked": 3
+    },
+    "tel:intl-tel": {
+     "method": "script",
+     "worked": 3
+    },
+    "number": {
+     "method": "script",
+     "worked": 3
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": true,
+   "codeOn": "2026-10-02",
+   "forms": 51,
+   "ready": 48,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "jobs.ashbyhq.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 70
+    },
+    "email": {
+     "method": "script",
+     "worked": 70
+    },
+    "radio": {
+     "method": "script",
+     "worked": 44
+    },
+    "radio:buttons": {
+     "method": "script",
+     "worked": 39
+    },
+    "tel": {
+     "method": "script",
+     "worked": 48
+    },
+    "url": {
+     "method": "script",
+     "worked": 10
+    },
+    "combobox": {
+     "method": "script",
+     "worked": 43
+    },
+    "select": {
+     "method": "script",
+     "worked": 5
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 20
+    },
+    "number": {
+     "method": "script",
+     "worked": 1
+    },
+    "textarea": {
+     "method": "script",
+     "worked": 10
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 134,
+   "ready": 116,
+   "trouble": {},
+   "updated": "2026-10-03"
+  },
+  "jobs.jobvite.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "tel": {
+     "method": "script",
+     "worked": 1
+    },
+    "select": {
+     "method": "script",
+     "worked": 1
+    },
+    "radio:label-drawn": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 2,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 6,
+   "ready": 3,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "jobs.lever.co": {
+   "controls": {
+    "select": {
+     "method": "script",
+     "worked": 2
+    },
+    "text": {
+     "method": "script",
+     "worked": 3
+    },
+    "email": {
+     "method": "script",
+     "worked": 3
+    },
+    "combobox": {
+     "method": "clicked",
+     "worked": 3
+    },
+    "textarea": {
+     "method": "script",
+     "worked": 1
+    },
+    "select:select2": {
+     "method": "script",
+     "worked": 1
+    },
+    "radio": {
+     "method": "script",
+     "worked": 1
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 3
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 19,
+   "ready": 15,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "lifeattiktok.com": {
+   "controls": {},
+   "signIn": true,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "nexthopai.bamboohr.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 2
+    },
+    "radio": {
+     "method": "script",
+     "worked": 1
+    },
+    "combobox:menu-button": {
+     "method": "clicked",
+     "worked": 2
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 4,
+   "ready": 2,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "prospectequities.applytojob.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 2
+    },
+    "email": {
+     "method": "script",
+     "worked": 2
+    },
+    "tel": {
+     "method": "script",
+     "worked": 2
+    },
+    "select": {
+     "method": "script",
+     "worked": 2
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 2
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 2,
+   "ready": 1,
+   "trouble": {},
+   "updated": "2026-10-03"
+  },
+  "specteraerospace.bamboohr.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 2
+    },
+    "radio": {
+     "method": "script",
+     "worked": 2
+    },
+    "combobox:menu-button": {
+     "method": "clicked",
+     "worked": 2
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 6,
+   "ready": 6,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "versafile1.bamboohr.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 4
+    },
+    "textarea": {
+     "method": "script",
+     "worked": 4
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "www.d2l.com": {
+   "controls": {},
+   "signIn": true,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "www.google.com": {
+   "controls": {},
+   "signIn": true,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "www.janestreet.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "email": {
+     "method": "script",
+     "worked": 1
+    },
+    "tel": {
+     "method": "script",
+     "worked": 1
+    },
+    "radio:label-drawn": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 1,
+   "ready": 1,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "www.rubrik.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    },
+    "select": {
+     "method": "script",
+     "worked": 1
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 0,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "www.tesla.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 3
+    },
+    "select": {
+     "method": "script",
+     "worked": 4
+    },
+    "calendar:calendar": {
+     "method": "calendar",
+     "worked": 1
+    },
+    "radio": {
+     "method": "script",
+     "worked": 3
+    },
+    "checkbox": {
+     "method": "script",
+     "worked": 2
+    }
+   },
+   "signIn": false,
+   "pages": 4,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 2,
+   "ready": 0,
+   "trouble": {},
+   "updated": "2026-10-02"
+  },
+  "www.udig.com": {
+   "controls": {
+    "text": {
+     "method": "script",
+     "worked": 1
+    }
+   },
+   "signIn": false,
+   "pages": 1,
+   "emailsCode": false,
+   "codeOn": "",
+   "forms": 1,
+   "ready": 1,
+   "trouble": {},
+   "updated": "2026-10-02"
+  }
+ }
+}

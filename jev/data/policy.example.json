@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "target": 5,
+  "where": [
+    "home",
+    "apac",
+    "remote"
+  ],
+  "levels": [
+    "mid",
+    "senior"
+  ],
+  "minScore": 0.5,
+  "boards": [],
+  "excludeEmployers": [
+    "Example Corp"
+  ],
+  "documents": {
+    "tailor": false,
+    "cover": false
+  }
+}

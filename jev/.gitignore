@@ -1,0 +1,38 @@
+# secrets
+.env
+.env.*
+!.env.example
+!.env.cloud.example
+
+# personal data: never committed
+data/profile.json
+data/bank.json
+data/voice.local.md
+data/memory.json
+data/knowledge.json
+applications/*
+!applications/README.md
+!applications/example.csv
+data/queue.json
+data/queue.json.bak
+data/accounts.json
+data/policy.json
+data/gmail.json
+data/cache/
+data/runs/
+documents/*
+!documents/README.md
+data/imports/
+
+# node
+node_modules/
+npm-debug.log*
+.npm/
+
+# editors and OS
+.DS_Store
+.vscode/
+.idea/
+
+# test output
+coverage/

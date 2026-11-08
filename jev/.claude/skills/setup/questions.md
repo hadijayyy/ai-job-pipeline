@@ -44,12 +44,14 @@ their status, they should check before applying.
 
 | Ask | Goes in |
 |---|---|
-| Internships, new-grad roles, or both, and for which terms | `summary`, and a standing answer |
-| The earliest date you can start | `preferences.earliestStart` |
-| How long you can work: term lengths, or "permanent" | `preferences.availability` |
-| The places you want to work, best first | `preferences.preferredLocations` |
+| Which job titles, best first (for example Senior Data Analyst, Analytics Engineer) | `summary`, and `SEARCH.titleInclude` in `src/config.ts` if one is missing there |
+| Your seniority and years of professional experience | `preferences.yearsOfExperience`, `summary` |
+| The earliest date you can start, or your notice period | `preferences.earliestStart` |
+| Full time, contract, or both | `preferences.availability` |
+| The places you want to work, best first, and your country | `preferences.preferredLocations`, `HOME` in `src/config.ts` |
 | Will you relocate? | `preferences.willingToRelocate` |
 | Remote work: preferred, open to it, or no | `preferences.remote` |
+| Which time zones can you overlap with, from where you live | `preferences.timezone` |
 | Can you work in an office or hybrid if the job needs it? | a standing answer |
 
 ## E. What you have done
@@ -57,9 +59,9 @@ their status, they should check before applying.
 | Ask | Goes in |
 |---|---|
 | Is every job and project on the resume right, with exact numbers? | `experience`, `projects` |
-| Anything not on the resume that you would mention: awards, hackathons, coursework, open source | `facts` |
+| Anything not on the resume that you would mention: awards, certifications, open source | `facts` |
 | Languages you speak, and how well | `spokenLanguages` |
-| Programming languages, frameworks and tools, as you would list them | `skills` |
+| The tools you use, as you would list them: query languages, programming languages, BI and warehouse tools | `skills` |
 
 ## F. Voluntary self-identification
 
@@ -97,13 +99,12 @@ it answered. Write the answer in the user's words.
    non-compete agreement, having worked at or applied to the company
    before, relatives who work there, a security clearance. Ask for each one
    plainly. Do not assume "no".
-7. If a posting asks for a graduation date or year of study that is not
-   yours, should the tool still apply? Every date is still answered
-   truthfully.
-8. Which area of engineering do you prefer, in order? Forms often ask you
-   to rank front end, back end, full stack, mobile, data, infrastructure.
+7. Which SQL dialect, BI tool and warehouse do you know best, in order?
+   Forms often ask you to pick or rank them.
+8. Which area do you prefer, in order? Forms often ask you to rank
+   analytics, data science, analytics engineering, product, finance.
 9. Which AI tools do you use, and how?
-10. How many internships or jobs have you held? (Count them with the user.)
+10. How many jobs have you held? (Count them with the user.)
 11. Are you free to travel for an interview or a test in person? The tool
     never picks a date or a time for you.
 12. Are you 18 or older? Some forms ask.

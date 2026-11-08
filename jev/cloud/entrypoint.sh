@@ -8,6 +8,8 @@
 # Settings, all optional:
 #   JEV_DAILY_AT        time of day for the run, HH:MM in the container's TZ (default 09:00)
 #   JEV_RUN_ON_START    1 to also run once as soon as the container starts (default 0)
+#   JEV_DASHBOARD       1 (default) to serve the dashboard on port 4545 inside the container.
+#                       docker-compose.yml publishes it on the server's loopback only: reach it by an SSH tunnel
 #   JEV_PROFILE_B64, JEV_POLICY_B64, JEV_BANK_B64, JEV_VOICE_B64, JEV_RESUME_B64
 #                       a file as base64, written on first start only if the file is not already there.
 #                       Not for a large resume: one environment variable is limited to about 128 KB.
@@ -59,8 +61,14 @@ node bin/jev.js doctor || echo "[cloud] doctor found something to fix. The daily
 
 child=""
 sleeper=""
+dash=""
+if [ "${JEV_DASHBOARD:-1}" = "1" ]; then
+  node bin/jev.js report --host 0.0.0.0 &
+  dash=$!
+fi
 stop() {
   echo "[cloud] stopping"
+  if [ -n "$dash" ]; then kill "$dash" 2>/dev/null || true; fi
   if [ -n "$sleeper" ]; then kill "$sleeper" 2>/dev/null || true; fi
   if [ -n "$child" ]; then
     # Let the application in progress finish: it may be with the employer already.

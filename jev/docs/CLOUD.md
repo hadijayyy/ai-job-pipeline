@@ -101,6 +101,23 @@ docker compose stop                                            # the same, then 
 To pause for good, `docker compose stop`. To change the policy, edit `data/policy.json` in the volume;
 a run reads it once, when it starts.
 
+## Watching progress: the dashboard
+
+The dashboard (Today, Needs you, Applications, Automation) runs inside the container on port 4545 and is
+published on the server's own loopback only, so it is not on the internet. Reach it with an SSH tunnel from your own computer:
+
+```bash
+ssh -L 4545:localhost:4545 you@your-server
+```
+
+Then open http://localhost:4545 in your browser. Leave the tunnel open while you look. It shows what was sent today, what
+needs you, the status of every job, and lets you mark a job by hand. Set `JEV_DASHBOARD=0` in `.env` to turn it off.
+
+The Automation screen's schedule switch is for a Mac. On a server the container runs the day by itself; change the time with
+`JEV_DAILY_AT` in `.env` and `docker compose up -d`.
+
+With Telegram set up, the day's summary and anything that needs you also reach your phone.
+
 ## When a form needs you
 
 A board that shows a CAPTCHA or emails a code to prove a person is applying cannot be finished by

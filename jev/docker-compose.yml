@@ -8,6 +8,10 @@ services:
     environment:
       TZ: Asia/Jakarta
     shm_size: 1gb
+    # The dashboard. Published on the server's own loopback only, so it is not on the internet.
+    # Reach it with: ssh -L 4545:localhost:4545 you@your-server   then open http://localhost:4545
+    ports:
+      - "127.0.0.1:4545:4545"
     # Time for the application in progress to finish when the container is stopped.
     stop_grace_period: 180s
     volumes:

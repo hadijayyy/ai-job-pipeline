@@ -311,16 +311,18 @@ program
   .command("report")
   .description("A dashboard of your records on your own machine: totals, applications per day and per board, every row with its status, which you can change by hand. --static writes a snapshot page instead")
   .option("--port <n>", "the port to listen on", int, REPORT.port)
+  .option("--host <address>", "the interface to listen on. Leave it alone on a desktop. In a container use 0.0.0.0 and publish the port on the server's loopback only", "127.0.0.1")
   .option("--open", "open the page in your browser")
   .option("--static <file>", "write a self-contained snapshot page to this file and exit")
-  .action(async (o: { port: number; open?: boolean; static?: string }) => {
+  .action(async (o: { port: number; host: string; open?: boolean; static?: string }) => {
     if (o.static) {
       writeFileSync(o.static, reportPage(buildReport(loadRows())));
       console.log(`Wrote ${o.static}`);
       if (o.open) spawn("open", [o.static], { stdio: "ignore", detached: true, env: childEnv() }).unref();
       return;
     }
-    const address = await startReportServer(o.port);
+    const address = await startReportServer(o.port, o.host);
+    if (o.host !== "127.0.0.1" && o.host !== "localhost") console.log(`Listening on ${o.host}. Make sure the port is reachable only from this machine or through an SSH tunnel.`);
     console.log(`Dashboard at ${address}  (Ctrl-C to stop)`);
     if (o.open) spawn("open", [address], { stdio: "ignore", detached: true, env: childEnv() }).unref();
   });

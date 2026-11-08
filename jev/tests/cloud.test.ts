@@ -152,3 +152,24 @@ describe("notices to the phone", () => {
     expect(done).toBe(2);
   });
 });
+
+describe("the dashboard on a server", () => {
+  it("answers a request that names localhost and its port, and refuses any other host", async () => {
+    const { serveReport } = await import("../src/report/server.js");
+    const port = 45_000 + Math.floor(Math.random() * 2_000);
+    const server = await serveReport(port, "127.0.0.1");
+    try {
+      const get = (host: string) => new Promise<number>((resolve, reject) => {
+        const req = require("node:http").request({ host: "127.0.0.1", port, path: "/", method: "GET", headers: { host } }, (res: { statusCode: number; resume: () => void }) => { res.resume(); resolve(res.statusCode); });
+        req.on("error", reject);
+        req.end();
+      });
+      expect(await get(`localhost:${port}`)).toBe(200);
+      expect(await get(`127.0.0.1:${port}`)).toBe(200);
+      expect(await get("evil.example.com")).toBe(403);
+      expect(await get(`203.0.113.9:${port}`)).toBe(403);
+    } finally {
+      await server.close();
+    }
+  });
+});

@@ -7,6 +7,9 @@ effort: high
 
 # /setup: from a fresh clone to the first applications
 
+Answer in the user's own language, in plain words. A beginner may be using this: say what each step is for before you do it.
+`/mulai` is the gentler front door and calls these steps one at a time.
+
 The user should need to do four things: give you their resume, answer your
 questions, paste one key into a file, and say "go". You do everything else.
 
@@ -19,8 +22,9 @@ stops halfway and comes back, start from what `doctor` says.
 
 1. If `node_modules` is missing, run `npm install`.
 2. Run `npx jev doctor`. Fix what it names, in order:
-   - Node.js older than 22, Google Chrome missing, or Claude Code missing:
-     tell the user what to install and wait. You cannot install these.
+   - Node.js older than 22, Chrome missing, or Claude Code missing:
+     tell the user what to install and wait. On Linux the browser is
+     Chromium (`apt install chromium`, or `JEV_CHROME_PATH` names it) and runs headless with no window. You cannot install these.
      (You are running inside Claude Code, so it is present; a user who
      prefers a Claude API key can add `ANTHROPIC_API_KEY` to `.env` and the
      commands use the API instead.)
@@ -91,11 +95,20 @@ months.
 
 1. Ask them to create a key at https://openrouter.ai/keys and add a few
    dollars of credit.
-2. Run `cp .env.example .env`, then `open -e .env` so the file opens in a
-   text editor.
-3. Ask them to paste the key after `OPENROUTER_API_KEY=`, save, and tell you
-   when it is done.
-4. Run `npx jev doctor --online`. It makes one tiny JEV call and
+2. Put the key in. Pick the route by where this runs (`uname`):
+   - **A Mac, theirs:** run `cp .env.example .env`, then `open -e .env` so the
+     file opens in a text editor. Ask them to paste the key after
+     `OPENROUTER_API_KEY=`, save, and tell you when it is done.
+   - **Linux, in a cloud Claude Code session:** call the `request_credential`
+     tool for host `openrouter.ai`. It shows the user a secure form, so the
+     key never passes through the chat and you never see it. Then run
+     `cp .env.example .env` and set `OPENROUTER_API_KEY=placeholder` in it:
+     the tool needs a value to start, and the network proxy puts the real key
+     in the request. If `doctor --online` then fails with a 401, say so plainly.
+     This route has not been run end to end, so check it before relying on it.
+   - **A server running the Docker setup:** the key is in the container's
+     environment (`docs/CLOUD.md`). Do not create a `.env` there.
+3. Run `npx jev doctor --online`. It makes one tiny JEV call and
    one tiny Claude call to prove both work.
 
 Never ask the user to paste the key into the chat, and never print it. If
@@ -109,15 +122,18 @@ as a short table: score, company, role, location, date posted. Say how many
 jobs are queued and name the main reasons jobs were skipped
 (`npx jev status`).
 
-If the user wants other locations or kinds of roles than the ranking
-prefers, the settings are in `src/config.ts` (`LOCATION_MULTIPLIER`,
-`FIT_WEIGHTS`, `DISCOVER`).
+If the user wants other roles or places than the search prefers, the
+settings are in `src/config.ts`: `SEARCH` (which titles), `HOME` (their country),
+`LOCATION_MULTIPLIER`, `FIT_WEIGHTS`, `DISCOVER`. Change them with the user,
+and say what you changed.
 
 ## 7. Rehearse
 
-1. Run `npx jev apply --dry --count 3`. A Chrome window opens,
-   three forms are filled, nothing is sent, and the tabs close.
-2. Show the user every answer, grouped by form. Point out anything the tool
+1. Run `npx jev apply --dry --count 3`. Three forms are filled, nothing is
+   sent, and the tabs close. On a Mac a Chrome window opens and they can watch;
+   on Linux it runs headless, so there is no window.
+2. Show the user every answer, grouped by form. With no window, read them
+   from `npx jev inspect <id> --text` and `npx jev check <id>`. Point out anything the tool
    held and why.
 3. For each answer the user corrects, change the profile: a fact, or a
    standing answer in `answers`. Then rehearse again. Do not move on until
@@ -134,7 +150,8 @@ commands. Run `npx jev apply --count 1` on the best job in the queue that
 is on Greenhouse, Lever or Ashby. Without `--submit` the form is filled,
 checked and left open in the tool's Chrome window.
 
-Tell them to look at that window. Read the answers back to them, name
+On a Mac, tell them to look at that window. With no window (Linux), read the
+answers back from `npx jev inspect <id> --text`. Either way name
 anything the tool held, and ask: "Send this one?" Only when they say yes,
 run `npx jev submit <id>`. Then show the row in `npx jev log`.
 
@@ -146,8 +163,8 @@ questions.
 Do not list commands. Say only:
 
 - `/apply` sends more: they say how many.
-- `/report` is the dashboard: what was sent, what needs them, and the
-  switch for a daily run.
+- `/report` is the dashboard: what was sent today, what needs them, and each
+  job's status. On a server it is reached through an SSH tunnel (`docs/CLOUD.md`).
 - `/status` says where things stand at any time.
 
 Mention these once, and only when they apply. Do not set any of them up

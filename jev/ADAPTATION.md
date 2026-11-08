@@ -37,6 +37,11 @@ Upstream needs a Mac you watch. This copy also runs headless on a Linux server w
 come from `JEV_CHROME_PATH`, `JEV_HEADLESS` and `JEV_NO_SANDBOX`, the daily run is scheduled by `cloud/entrypoint.sh`,
 and a form that needs a person is sent to Telegram (`JEV_TELEGRAM_BOT_TOKEN`, `JEV_TELEGRAM_CHAT_ID`). See `docs/CLOUD.md`.
 
+## Starting as a beginner
+
+Open Claude Code in this folder and type `/mulai`. It finds out where you are and does one step at a time, in your own
+language. `docs/MULAI.md` explains the six stages in Indonesian.
+
 ## Using it on a Mac
 
 Needs Node 22, Google Chrome, Claude Code, and an OpenRouter key for JEV.

@@ -1,8 +1,9 @@
 /**
  * The dashboard server: serves the page and the records from your own machine, and takes what
  * the page sends: a status change, an answer to an open question, your daily policy, the
- * schedule. It listens on localhost only, answers only its own page, and takes a change only with
- * the token it gave that page when it started.
+ * schedule. It listens on localhost only (or, in a container, on the interface Docker publishes to
+ * the server's loopback), answers only its own page, and takes a change only with the token it gave
+ * that page when it started.
  */
 import { randomBytes, timingSafeEqual } from "node:crypto";
 import { createServer, type IncomingMessage, type ServerResponse } from "node:http";
@@ -105,7 +106,18 @@ const Schedule = z.object({ on: z.boolean(), at: z.string().max(5).optional() })
 const MailAnswer = z.object({ id: z.string().min(1).max(128), jobId: z.string().max(64).optional(), kind: ReplyKind.optional() });
 
 /** Starts the server and returns the address it listens on. */
-export function startReportServer(port: number = REPORT.port): Promise<string> {
+export async function startReportServer(port: number = REPORT.port, host: string = "127.0.0.1"): Promise<string> {
+  return (await serveReport(port, host)).address;
+}
+
+/**
+ * Starts the server and returns its address and a way to stop it. `host` is the interface it
+ * binds. On a desktop that is 127.0.0.1. In a container it is 0.0.0.0 so Docker can reach it, and
+ * Docker publishes the port on the server's own loopback only (docker-compose.yml): the page is
+ * then reached through an SSH tunnel, never from the internet. Whatever the interface, a request
+ * must still name this server as `localhost` or `127.0.0.1` and carry the page's token.
+ */
+export function serveReport(port: number = REPORT.port, host: string = "127.0.0.1"): Promise<{ address: string; close: () => Promise<void> }> {
   const token = randomBytes(24).toString("hex");
   const json = (res: ServerResponse, body: unknown, status = 200) => send(res, status, "application/json", JSON.stringify(body));
   const server = createServer(async (req, res) => {
@@ -184,6 +196,6 @@ export function startReportServer(port: number = REPORT.port): Promise<string> {
   });
   return new Promise((resolve, reject) => {
     server.on("error", reject);
-    server.listen(port, "127.0.0.1", () => resolve(`http://127.0.0.1:${port}`));
+    server.listen(port, host, () => resolve({ address: `http://127.0.0.1:${port}`, close: () => new Promise<void>((done) => server.close(() => done())) }));
   });
 }

@@ -1,0 +1,21 @@
+# docker compose up -d --build   (see docs/CLOUD.md)
+services:
+  jev:
+    build: .
+    restart: unless-stopped
+    # The keys and settings. Copy .env.cloud.example to .env and fill it in. It stays on the server.
+    env_file: .env
+    environment:
+      TZ: Asia/Jakarta
+    shm_size: 1gb
+    # Time for the application in progress to finish when the container is stopped.
+    stop_grace_period: 180s
+    volumes:
+      - jev-data:/app/data
+      - jev-documents:/app/documents
+      - jev-applications:/app/applications
+
+volumes:
+  jev-data:
+  jev-documents:
+  jev-applications:

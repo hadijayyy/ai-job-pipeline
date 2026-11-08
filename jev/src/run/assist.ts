@@ -7,6 +7,8 @@
 import { spawn } from "node:child_process";
 import { ASSIST, childEnv } from "../config.js";
 import type { WaitingFor } from "../jobs/queue.js";
+import { safeUrl } from "../util/redact.js";
+import { notifyRemoteLater } from "./remote.js";
 
 const WORDS: Record<WaitingFor, string> = {
   human_code: "type the code the board emailed you, then click Submit",
@@ -47,6 +49,8 @@ export function notify(title: string, body: string): void {
 /** Tells the person a form waits on them and, for an emailed code, opens their mail at the search for it. */
 export function assist(job: { company: string; title: string }, waitingFor: WaitingFor, pageUrl: string): void {
   notify("jev-job-search needs you", `${job.company}: ${WORDS[waitingFor]}`);
+  // On a server there is no screen: the notice goes to the person's phone, with the link to open by hand.
+  notifyRemoteLater(`jev-job-search needs you\n${job.company}, ${job.title}\nTo do: ${WORDS[waitingFor]}\n${safeUrl(pageUrl)}`);
   if ((waitingFor === "human_code" || waitingFor === "email_link") && ASSIST.openMail && process.platform === "darwin") {
     let host = "";
     try {

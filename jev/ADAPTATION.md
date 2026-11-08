@@ -31,9 +31,15 @@ unchanged. See `docs/SAFETY.md`.
 - JEV and the form filling were not run against a live key or a live form in this session. The tests are offline,
   and a live check covered fetching the boards and the code filters only.
 
-## Using it
+## Running on a server
 
-Needs Node 22, Google Chrome on a Mac (upstream's requirement), Claude Code, and an OpenRouter key for JEV.
+Upstream needs a Mac you watch. This copy also runs headless on a Linux server with Docker: Chrome's path and flags
+come from `JEV_CHROME_PATH`, `JEV_HEADLESS` and `JEV_NO_SANDBOX`, the daily run is scheduled by `cloud/entrypoint.sh`,
+and a form that needs a person is sent to Telegram (`JEV_TELEGRAM_BOT_TOKEN`, `JEV_TELEGRAM_CHAT_ID`). See `docs/CLOUD.md`.
+
+## Using it on a Mac
+
+Needs Node 22, Google Chrome, Claude Code, and an OpenRouter key for JEV.
 
 ```bash
 cd jev

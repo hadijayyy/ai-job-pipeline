@@ -36,7 +36,7 @@ export function checkNode(version = process.versions.node): Check {
 }
 
 export function checkChrome(file: string = BROWSER.chromePath): Check {
-  return { name: "Google Chrome", ok: existsSync(file), detail: existsSync(file) ? "installed" : `not found at ${file}`, fix: "Install Google Chrome from https://www.google.com/chrome, or set BROWSER.chromePath in src/config.ts" };
+  return { name: "Chrome", ok: existsSync(file), detail: existsSync(file) ? "installed" : `not found at ${file}`, fix: "Install Google Chrome from https://www.google.com/chrome (on a Linux server: apt install chromium), or set JEV_CHROME_PATH in .env to the browser" };
 }
 
 /** How Claude is reached: Claude Code on the person's subscription, or the Claude API on their own key. */
@@ -54,8 +54,8 @@ export function checkKey(key = process.env.OPENROUTER_API_KEY ?? ""): Check {
   return {
     name: "OpenRouter key",
     ok,
-    detail: ok ? "set in .env" : existsSync(path.join(ROOT, ".env")) ? ".env exists but OPENROUTER_API_KEY is empty" : "no .env file yet",
-    fix: "Create a key at https://openrouter.ai/keys, run `cp .env.example .env`, and paste the key after OPENROUTER_API_KEY= in .env. Do not paste the key into a chat.",
+    detail: ok ? "set (in .env or the environment)" : existsSync(path.join(ROOT, ".env")) ? ".env exists but OPENROUTER_API_KEY is empty" : "no .env file and no OPENROUTER_API_KEY in the environment",
+    fix: "Create a key at https://openrouter.ai/keys, run `cp .env.example .env`, and paste the key after OPENROUTER_API_KEY= in .env (on a server, set OPENROUTER_API_KEY in the environment). Do not paste the key into a chat.",
   };
 }
 

@@ -1,12 +1,13 @@
 /**
  * A minimal Chrome DevTools Protocol client for the fill runner. It drives a
- * dedicated, visible Chrome window with its own profile, so a whole form is
- * filled with real input events in seconds and the user can watch, fix and
- * take over. No dependency: Node 22 ships fetch and WebSocket.
+ * dedicated Chrome with its own profile (a visible window on a desktop, headless
+ * on a server), so a whole form is filled with real input events in seconds and
+ * a person at a desktop can watch, fix and take over. No dependency: Node 22
+ * ships fetch and WebSocket.
  */
 import { spawn } from "node:child_process";
 import { mkdirSync } from "node:fs";
-import { BROWSER, childEnv } from "../config.js";
+import { BROWSER, childEnv, chromeFlags } from "../config.js";
 import { safeUrl } from "../util/redact.js";
 
 export type Target = { id: string; type: string; url: string; title: string; webSocketDebuggerUrl: string };
@@ -34,6 +35,7 @@ export async function ensureBrowser(): Promise<void> {
       // The window can be driven only from this machine.
       "--remote-debugging-address=127.0.0.1",
       `--user-data-dir=${BROWSER.profileDir}`,
+      ...chromeFlags(),
       "--no-first-run",
       "--no-default-browser-check",
       // A window behind another one would otherwise run its timers once a second.

@@ -11,7 +11,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { Page, sleep, type Target } from "../src/browser/cdp.js";
-import { BROWSER, childEnv, DAILY } from "../src/config.js";
+import { BROWSER, childEnv, chromeFlags, DAILY } from "../src/config.js";
 import { buildReport } from "../src/report/data.js";
 import type { Needs } from "../src/report/needs.js";
 import { reportPage } from "../src/report/page.js";
@@ -74,7 +74,7 @@ describe.skipIf(!existsSync(BROWSER.chromePath))("the dashboard page in a real b
       });
     });
     profile = mkdtempSync(path.join(tmpdir(), "jev-chrome-"));
-    chrome = spawn(BROWSER.chromePath, ["--headless=new", `--remote-debugging-port=${port}`, "--remote-debugging-address=127.0.0.1", `--user-data-dir=${profile}`, "--no-first-run", "--no-default-browser-check", "about:blank"], { stdio: "ignore", env: childEnv() });
+    chrome = spawn(BROWSER.chromePath, [...chromeFlags(), "--headless=new", `--remote-debugging-port=${port}`, "--remote-debugging-address=127.0.0.1", `--user-data-dir=${profile}`, "--no-first-run", "--no-default-browser-check", "about:blank"], { stdio: "ignore", env: childEnv() });
     for (let i = 0; i < 80; i++) {
       if (await fetch(`http://127.0.0.1:${port}/json/version`).then((r) => r.ok, () => false)) return;
       await sleep(250);

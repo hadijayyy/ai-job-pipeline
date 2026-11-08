@@ -251,9 +251,44 @@ export const CACHE = {
   maxPlans: 400,
 } as const;
 
+/** Chrome and Chromium locations tried in order on each system, unless JEV_CHROME_PATH names one. */
+const CHROME_PATHS = {
+  darwin: ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"],
+  linux: ["/usr/bin/chromium", "/usr/bin/chromium-browser", "/usr/bin/google-chrome-stable", "/usr/bin/google-chrome"],
+} as const;
+
+/** The browser the runner drives: JEV_CHROME_PATH when set, else the first install found for this system. */
+export function resolveChromePath(env: NodeJS.ProcessEnv = process.env, platform: string = process.platform, exists: (f: string) => boolean = existsSync): string {
+  const asked = env.JEV_CHROME_PATH?.trim();
+  if (asked) return asked;
+  const list: readonly string[] = platform === "darwin" ? CHROME_PATHS.darwin : platform === "linux" ? CHROME_PATHS.linux : CHROME_PATHS.darwin;
+  return list.find(exists) ?? list[0] ?? CHROME_PATHS.darwin[0];
+}
+
+const truthy = (v: string | undefined): boolean | undefined => {
+  const t = (v ?? "").trim().toLowerCase();
+  return ["1", "true", "yes", "on"].includes(t) ? true : ["0", "false", "no", "off"].includes(t) ? false : undefined;
+};
+
+/**
+ * Flags that let the same Chrome run on a server. Headless is the default on Linux with no display
+ * (JEV_HEADLESS=1 or 0 overrides). The sandbox is switched off when asked (JEV_NO_SANDBOX=1) or when
+ * running as root, which is what a container usually does, because Chrome refuses to start sandboxed as root.
+ */
+export function chromeFlags(env: NodeJS.ProcessEnv = process.env, platform: string = process.platform, uid: number | undefined = process.getuid?.()): string[] {
+  const flags: string[] = [];
+  const headless = truthy(env.JEV_HEADLESS) ?? (platform === "linux" && !env.DISPLAY);
+  if (headless) flags.push("--headless=new", "--disable-gpu");
+  if (platform === "linux") flags.push("--disable-dev-shm-usage");
+  if (truthy(env.JEV_NO_SANDBOX) ?? uid === 0) flags.push("--no-sandbox");
+  return flags;
+}
+
 export const BROWSER = {
-  /** The Chrome binary the fill runner drives over the DevTools protocol. */
-  chromePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  /** The Chrome binary the fill runner drives over the DevTools protocol. Read when used, so .env can set JEV_CHROME_PATH. */
+  get chromePath(): string {
+    return resolveChromePath();
+  },
   /** Local DevTools port of the runner's own Chrome window. */
   port: 9333,
   /** Its profile lives with the other run data, so it is git-ignored and keeps cookies between runs. */
@@ -464,6 +499,17 @@ export const ASSIST = {
   /** For an emailed human-check code, open the person's own mail at a search for it. The tool reads no mail for this. */
   openMail: true,
   mailSearchBase: "https://mail.google.com/mail/u/0/#search/",
+} as const;
+
+/**
+ * Notices to the person's phone when the tool runs on a server and no one sits at the screen
+ * (`src/run/remote.ts`). Off until JEV_TELEGRAM_BOT_TOKEN and JEV_TELEGRAM_CHAT_ID are both set.
+ */
+export const REMOTE = {
+  apiBase: "https://api.telegram.org",
+  /** Telegram refuses a message over 4096 characters. */
+  maxChars: 3_500,
+  timeoutMs: 8_000,
 } as const;
 
 /** What a child process may inherit from the environment. Keys and passwords are not on the list, so no child ever sees one. */

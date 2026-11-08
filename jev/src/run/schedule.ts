@@ -48,7 +48,7 @@ const launchctl: Launchctl = (args) => spawnSync("/bin/launchctl", args, { encod
 const domain = () => `gui/${process.getuid?.() ?? 0}`;
 
 export function installSchedule(at: string = DAILY.at, o: { file?: string; run?: Launchctl; node?: string; root?: string; searchPath?: string } = {}): { file: string; at: string } {
-  if (process.platform !== "darwin" && !o.run) throw new Error("the scheduled run uses macOS's scheduler. On another system, run `npx jev daily` from your own scheduler");
+  if (process.platform !== "darwin" && !o.run) throw new Error("the scheduled run uses macOS's scheduler. On a server, use the Docker setup in docs/CLOUD.md, which runs it once a day. Elsewhere, run `npx jev daily` from your own scheduler");
   const time = timeOfDay(at);
   if (!time) throw new Error(`"${at}" is not a time of day. Give it as HH:MM, for example 09:00`);
   const file = o.file ?? agentFile();

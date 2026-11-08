@@ -21,6 +21,7 @@ import { checkJob } from "./browser/submit.js";
 import { ACCOUNTS, childEnv, DAILY, GMAIL, INBOX, loadEnv, DISCOVER, PATHS, REPORT, RUN } from "./config.js";
 import { accountGate } from "./accounts/capability.js";
 import { clearStop, dailyRun, formatDaily, localDay, requestStop, saveDaily, stopRequested, type Outcome } from "./run/daily.js";
+import { flushRemote, notifyRemoteLater } from "./run/remote.js";
 import { loadPolicy } from "./run/policy.js";
 import { formatInbox, recordReplies } from "./run/inbox.js";
 import { readInbox } from "./mail/status.js";
@@ -238,6 +239,9 @@ program
     }
     console.log(o.json ? JSON.stringify(summary, null, 2) : `\n${formatDaily(summary)}`);
     if (!dry && !o.json) console.log(whereTheRecordIs());
+    // On a server the summary goes to the person's phone, when they have set that up.
+    if (!dry) notifyRemoteLater(formatDaily(summary));
+    await flushRemote();
     endIfAbandoned();
   });
 

@@ -19,7 +19,7 @@ import { itemFor, MemoryStore } from "../src/accounts/secrets.js";
 import { workday } from "../src/accounts/workday.js";
 import { Page, sleep, type Target } from "../src/browser/cdp.js";
 import { dump, goto, install } from "../src/browser/session.js";
-import { ACCOUNTS, BROWSER, childEnv } from "../src/config.js";
+import { ACCOUNTS, BROWSER, childEnv, chromeFlags } from "../src/config.js";
 import { startMockBoard, type MockBoard } from "./helpers/workdayMock.js";
 
 // Made up for the test, and sent only to a server on this machine.
@@ -44,7 +44,7 @@ describe.skipIf(!existsSync(BROWSER.chromePath))("the sign-in in a real browser"
   beforeAll(async () => {
     port = await freePort();
     profile = mkdtempSync(path.join(tmpdir(), "jev-chrome-"));
-    chrome = spawn(BROWSER.chromePath, ["--headless=new", `--remote-debugging-port=${port}`, "--remote-debugging-address=127.0.0.1", `--user-data-dir=${profile}`, "--no-first-run", "--no-default-browser-check", "about:blank"], { stdio: "ignore", env: childEnv() });
+    chrome = spawn(BROWSER.chromePath, [...chromeFlags(), "--headless=new", `--remote-debugging-port=${port}`, "--remote-debugging-address=127.0.0.1", `--user-data-dir=${profile}`, "--no-first-run", "--no-default-browser-check", "about:blank"], { stdio: "ignore", env: childEnv() });
     for (let i = 0; i < 80; i++) {
       if (await fetch(`http://127.0.0.1:${port}/json/version`).then((r) => r.ok, () => false)) return;
       await sleep(250);
